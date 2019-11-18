@@ -1,0 +1,40 @@
+package blog.model;
+
+/**
+ * Recommendations class users make recommendations for restaurants
+ */
+public class Recommendations {
+    protected Integer RecommendationId;
+    protected Users user;
+    protected blog.model.Restaurants restaurants;
+
+    public Recommendations(Integer recommendationId, Users user, blog.model.Restaurants restaurants) {
+        this.RecommendationId = recommendationId;
+        this.user = user;
+        this.restaurants = restaurants;
+    }
+
+    public Integer getRecommendationId() {
+        return RecommendationId;
+    }
+
+    public void setRecommendationId(Integer recommendationId) {
+        this.RecommendationId = recommendationId;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public blog.model.Restaurants getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(blog.model.Restaurants restaurants) {
+        this.restaurants = restaurants;
+    }
+}

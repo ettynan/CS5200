@@ -1,0 +1,223 @@
+package blog.dal;
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+
+public class ReservationsDao {
+	protected ConnectionManager connectionManager;
+
+    private static ReservationsDao instance = null;
+
+    protected ReservationsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static ReservationsDao getInstance() {
+        if (instance == null) {
+            instance = new ReservationsDao();
+        }
+        return instance;
+    }
+
+    public Reservations create(Reservations reservations) throws SQLException {
+        String insertReservation =
+                "INSERT INTO Reservations(ReservationId, Start, End, Size, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertReservation, Statement.RETURN_GENERATED_KEYS);
+            insertStmt.setInt(1, (reservations.getReservationId()));
+            insertStmt.setTimestamp(2, new Timestamp (reservations.getStart().getTime()));
+            insertStmt.setTimestamp(3, new Timestamp (reservations.getEnd().getTime()));
+            insertStmt.setInt(4, reservations.getSize());
+            insertStmt.setString(5, reservations.getUserName());
+            insertStmt.setInt(6, reservations.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int reservationId = -1;
+			if(resultKey.next()) {
+				reservationId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			reservations.setReservationId(reservationId);
+            
+            return reservations;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Reservations getReservationById(int reservationsId) throws SQLException {
+        String selectReservation = "SELECT * FROM Reservations WHERE ReservationId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectReservation);
+            selectStmt.setInt(1, reservationsId);
+            results = selectStmt.executeQuery();
+            while(results.next()) {
+				int reservationId = results.getInt("ReservationId");
+				Date start = results.getDate("Start");
+			    Date end = results.getDate("End");
+			    int size = results.getInt("Size");
+			    String userName = results.getString("UserName");
+			    int restaurantId = results.getInt("RestaurantId");
+			    
+			    Reservations reservation = new Reservations(reservationId, start, end, size, userName, restaurantId);
+			    return reservation;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+    
+    public List<Reservations> getReservationsByUserName(String userName)
+			throws SQLException {
+		List<Reservations> reservations = new ArrayList<Reservations>();
+		String selectReservations =
+			"SELECT * " +
+			"FROM Reservations WHERE UserName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectReservations);
+			selectStmt.setString(1, userName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int reservationId = results.getInt("ReservationId");
+				Date start = results.getDate("Start");
+			    Date end = results.getDate("End");
+			    int size = results.getInt("Size");
+			    String userName1 = results.getString("UserName");
+			    int restaurantId = results.getInt("RestaurantId");
+			    
+			    Reservations reservation = new Reservations(reservationId, start, end, size, userName, restaurantId);
+			    reservations.add(reservation);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return reservations;
+	}
+    
+    public List<Reservations> getReservationsByRestaurantId(int sitDownRestaurantId)
+			throws SQLException {
+		List<Reservations> reservations = new ArrayList<Reservations>();
+		String selectReservations =
+			"SELECT * " +
+			"FROM Reservations" +
+			"WHERE RestaurantId=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectReservations);
+			selectStmt.setInt(1, sitDownRestaurantId);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int reservationId = results.getInt("ReservationId");
+			    Date start = results.getDate("Start");
+			    Date end = results.getDate("End");
+			    int size = results.getInt("Size");
+			    String userName = results.getString("UserName");
+			    int restaurantId1 = results.getInt("RestaurantId");
+			    
+			    Reservations reservation = new Reservations(reservationId, start, end, size, userName, sitDownRestaurantId);
+			    reservations.add(reservation);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return reservations;
+	}
+    
+    /**
+     * Delete the Reservations instance.
+     * This runs a DELETE statement.
+     */
+    public Reservations delete(Reservations reservations) throws SQLException {
+        String deleteReservation = "DELETE FROM Reservations WHERE reservationId=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteReservation);
+            deleteStmt.setInt(1, reservations.getReservationId());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+}

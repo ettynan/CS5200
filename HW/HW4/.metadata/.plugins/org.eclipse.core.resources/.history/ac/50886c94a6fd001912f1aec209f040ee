@@ -1,0 +1,46 @@
+package java.neu.edu.org;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class creditcards {
+
+
+    public List<CreditCards> getCreditCardsByUserName(String userName) throws SQLException {
+        List<CreditCards> creditCards = new ArrayList<CreditCards>();
+        String selectCreditCards =
+                "SELECT CardNumber, Expiration, UserName " +
+                        "FROM CreditCards " +
+                        "WHERE UserName=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectCreditCards);
+            selectStmt.setString(1, userName);
+            results = selectStmt.executeQuery();
+            while(results.next()) {
+                long cardNumber = results.getLong("CardNumber");
+                Date expiration = results.getDate("Expiration");
+                CreditCards creditCard = new CreditCards(cardNumber, expiration, userName);
+                creditCards.add(creditCard);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return creditCards;
+    }
+}

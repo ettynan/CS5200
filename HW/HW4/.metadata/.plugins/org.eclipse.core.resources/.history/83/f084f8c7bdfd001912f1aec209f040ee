@@ -1,0 +1,36 @@
+package blog.model;
+
+/**
+ * Class for SitDown restaurants extending Restaurants
+ */
+public class SitDownRestaurants extends blog.model.Restaurants {
+    protected blog.model.Restaurants restaurant;
+    protected Integer Capacity;
+
+    public SitDownRestaurants(Integer restaurantId, String name, String description, String menu, String hours,
+                              boolean active, CuisineType cuisine, String street1, String street2,
+                              String city, String state, Integer zip, String companyName,
+                              Restaurants restaurant, Integer capacity) {
+        super(restaurantId, name, description, menu, hours, active, cuisine, street1, street2, city, state, zip,
+                companyName);
+        this.restaurant = restaurant;
+        this.Capacity = capacity;
+    }
+
+    public blog.model.Restaurants getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(blog.model.Restaurants restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Integer getCapacity() {
+        return Capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.Capacity = capacity;
+    }
+}
+

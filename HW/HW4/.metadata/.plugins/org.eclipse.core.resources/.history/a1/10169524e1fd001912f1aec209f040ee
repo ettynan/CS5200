@@ -1,0 +1,73 @@
+package blog.model;
+
+import java.util.Date;
+
+/**
+ * Reservations class users make reservations for sit down restaurants
+ */
+public class Reservations {
+    protected Integer ReservationId;
+    protected Date Start;
+    protected Date End;
+    protected Integer Size;
+    protected Users user;
+    protected blog.model.Restaurants restaurants;
+
+    public Reservations(Integer reservationId, Date start, Date end, Integer size, Users user,
+                        blog.model.Restaurants restaurants) {
+        this.ReservationId = reservationId;
+        this.Start = start;
+        this.End = end;
+        this.Size = size;
+        this.user = user;
+        this.restaurants = restaurants;
+    }
+
+    public Integer getReservationId() {
+        return ReservationId;
+    }
+
+    public void setReservationId(Integer reservationId) {
+        this.ReservationId = reservationId;
+    }
+
+    public Date getStart() {
+        return Start;
+    }
+
+    public void setStart(Date start) {
+        this.Start = start;
+    }
+
+    public Date getEnd() {
+        return End;
+    }
+
+    public void setEnd(Date end) {
+        this.End = end;
+    }
+
+    public Integer getSize() {
+        return Size;
+    }
+
+    public void setSize(Integer size) {
+        this.Size = size;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public blog.model.Restaurants getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(blog.model.Restaurants restaurants) {
+        this.restaurants = restaurants;
+    }
+}

@@ -1,0 +1,126 @@
+28-Oct-2019 13:23:58.674 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.27
+28-Oct-2019 13:23:58.676 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Oct 7 2019 09:57:22 UTC
+28-Oct-2019 13:23:58.676 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.27.0
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.14.6
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          x86_64
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_192-b12
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0
+28-Oct-2019 13:23:58.677 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/user/Desktop/tomcat
+28-Oct-2019 13:23:58.681 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0
+28-Oct-2019 13:23:58.681 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/user/Desktop/tomcat
+28-Oct-2019 13:23:58.681 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dwtp.deploy=/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps
+28-Oct-2019 13:23:58.682 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.endorsed.dirs=/Users/user/Desktop/tomcat/endorsed
+28-Oct-2019 13:23:58.682 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/user/Desktop/tomcat/conf/logging.properties
+28-Oct-2019 13:23:58.682 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+28-Oct-2019 13:23:58.682 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+28-Oct-2019 13:23:58.682 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/user/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+28-Oct-2019 13:23:58.919 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:23:58.943 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:23:58.945 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [431] milliseconds
+28-Oct-2019 13:23:58.964 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+28-Oct-2019 13:23:58.964 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.27]
+28-Oct-2019 13:23:59.426 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+28-Oct-2019 13:23:59.445 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:23:59.450 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:23:59.451 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [506] milliseconds
+28-Oct-2019 13:29:39.682 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+28-Oct-2019 13:29:39.683 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:29:39.689 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:29:39.695 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+28-Oct-2019 13:29:39.705 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [Demo] registered the JDBC driver [com.mysql.cj.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+28-Oct-2019 13:29:39.706 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [Demo] appears to have started a thread named [mysql-cj-abandoned-connection-cleanup] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Object.wait(Native Method)
+ java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+ com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:85)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+28-Oct-2019 13:29:39.707 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:29:39.708 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:29:39.709 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:29:39.709 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:29:44.365 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.27
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Oct 7 2019 09:57:22 UTC
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.27.0
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.14.6
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          x86_64
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_192-b12
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0
+28-Oct-2019 13:29:44.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/user/Desktop/tomcat
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/user/Desktop/tomcat
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dwtp.deploy=/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.endorsed.dirs=/Users/user/Desktop/tomcat/endorsed
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/user/Desktop/tomcat/conf/logging.properties
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+28-Oct-2019 13:29:44.373 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/user/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+28-Oct-2019 13:29:44.626 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:29:44.652 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:29:44.655 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [448] milliseconds
+28-Oct-2019 13:29:44.678 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+28-Oct-2019 13:29:44.678 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.27]
+28-Oct-2019 13:29:44.823 FINE [main] org.apache.jasper.servlet.JasperInitializer.onStartup Initializing Jasper for context [null]
+28-Oct-2019 13:29:44.827 FINE [main] org.apache.jasper.servlet.TldScanner.scanResourcePaths No TLD files were found in resource path [/WEB-INF/].
+28-Oct-2019 13:29:44.846 FINE [main] org.apache.jasper.compiler.JspRuntimeContext.<init> Parent class loader is: [ParallelWebappClassLoader
+  context: ROOT
+  delegate: false
+----------> Parent Classloader:
+java.net.URLClassLoader@238e0d81
+]
+28-Oct-2019 13:29:44.846 FINE [main] org.apache.jasper.compiler.JspRuntimeContext.initClassPath Compilation classpath initialized: /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/work/Catalina/localhost/ROOT:/Users/user/Desktop/tomcat/lib/:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ko.jar:/Users/user/Desktop/tomcat/lib/el-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-es.jar:/Users/user/Desktop/tomcat/lib/tomcat-websocket.jar:/Users/user/Desktop/tomcat/lib/jasper.jar:/Users/user/Desktop/tomcat/lib/jasper-el.jar:/Users/user/Desktop/tomcat/lib/tomcat-util.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-de.jar:/Users/user/Desktop/tomcat/lib/catalina-storeconfig.jar:/Users/user/Desktop/tomcat/lib/jsp-api.jar:/Users/user/Desktop/tomcat/lib/catalina-tribes.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-cs.jar:/Users/user/Desktop/tomcat/lib/catalina.jar:/Users/user/Desktop/tomcat/lib/tomcat-jni.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-pt-BR.jar:/Users/user/Desktop/tomcat/lib/ecj-4.13.jar:/Users/user/Desktop/tomcat/lib/websocket-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-coyote.jar:/Users/user/Desktop/tomcat/lib/catalina-ha.jar:/Users/user/Desktop/tomcat/lib/tomcat-api.jar:/Users/user/Desktop/tomcat/lib/annotations-api.jar:/Users/user/Desktop/tomcat/lib/jaspic-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-zh-CN.jar:/Users/user/Desktop/tomcat/lib/catalina-ant.jar:/Users/user/Desktop/tomcat/lib/servlet-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-util-scan.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ja.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ru.jar:/Users/user/Desktop/tomcat/lib/tomcat-jdbc.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-fr.jar:/Users/user/Desktop/tomcat/lib/tomcat-dbcp.jar:/Users/user/Desktop/tomcat/bin/bootstrap.jar:/Users/user/Desktop/tomcat/bin/tomcat-juli.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/lib/tools.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/System/Library/Java/Extensions/MRJToolkit.jar
+28-Oct-2019 13:29:44.847 FINE [main] org.apache.jasper.servlet.JspServlet.init Scratch dir for the JSP engine is: [/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/work/Catalina/localhost/ROOT]
+28-Oct-2019 13:29:44.847 FINE [main] org.apache.jasper.servlet.JspServlet.init IMPORTANT: Do not modify the generated servlets
+28-Oct-2019 13:29:45.091 FINE [main] org.apache.jasper.servlet.JasperInitializer.onStartup Initializing Jasper for context [BlogApplication]
+28-Oct-2019 13:29:45.091 FINE [main] org.apache.jasper.servlet.TldScanner.scanResourcePaths No TLD files were found in resource path [/WEB-INF/].
+28-Oct-2019 13:29:45.136 FINE [main] org.apache.jasper.servlet.TldScanner$TldScannerCallback.scan TLD files were found in JAR [file:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar].
+28-Oct-2019 13:29:45.138 FINE [main] org.apache.jasper.servlet.TldScanner$TldScannerCallback.scan No TLD files were found in [file:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/lib/mysql-connector-java-8.0.18.jar]. Consider adding the JAR to the tomcat.util.scan.StandardJarScanFilter.jarsToSkip property in CATALINA_BASE/conf/catalina.properties file.
+28-Oct-2019 13:29:45.138 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+28-Oct-2019 13:29:45.156 FINE [main] org.apache.jasper.compiler.JspRuntimeContext.<init> Parent class loader is: [ParallelWebappClassLoader
+  context: Demo
+  delegate: false
+----------> Parent Classloader:
+java.net.URLClassLoader@238e0d81
+]
+28-Oct-2019 13:29:45.156 FINE [main] org.apache.jasper.compiler.JspRuntimeContext.initClassPath Compilation classpath initialized: /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/classes/:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/lib/mysql-connector-java-8.0.18.jar:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar:/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/work/Catalina/localhost/Demo:/Users/user/Desktop/tomcat/lib/:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ko.jar:/Users/user/Desktop/tomcat/lib/el-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-es.jar:/Users/user/Desktop/tomcat/lib/tomcat-websocket.jar:/Users/user/Desktop/tomcat/lib/jasper.jar:/Users/user/Desktop/tomcat/lib/jasper-el.jar:/Users/user/Desktop/tomcat/lib/tomcat-util.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-de.jar:/Users/user/Desktop/tomcat/lib/catalina-storeconfig.jar:/Users/user/Desktop/tomcat/lib/jsp-api.jar:/Users/user/Desktop/tomcat/lib/catalina-tribes.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-cs.jar:/Users/user/Desktop/tomcat/lib/catalina.jar:/Users/user/Desktop/tomcat/lib/tomcat-jni.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-pt-BR.jar:/Users/user/Desktop/tomcat/lib/ecj-4.13.jar:/Users/user/Desktop/tomcat/lib/websocket-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-coyote.jar:/Users/user/Desktop/tomcat/lib/catalina-ha.jar:/Users/user/Desktop/tomcat/lib/tomcat-api.jar:/Users/user/Desktop/tomcat/lib/annotations-api.jar:/Users/user/Desktop/tomcat/lib/jaspic-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-zh-CN.jar:/Users/user/Desktop/tomcat/lib/catalina-ant.jar:/Users/user/Desktop/tomcat/lib/servlet-api.jar:/Users/user/Desktop/tomcat/lib/tomcat-util-scan.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ja.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-ru.jar:/Users/user/Desktop/tomcat/lib/tomcat-jdbc.jar:/Users/user/Desktop/tomcat/lib/tomcat-i18n-fr.jar:/Users/user/Desktop/tomcat/lib/tomcat-dbcp.jar:/Users/user/Desktop/tomcat/bin/bootstrap.jar:/Users/user/Desktop/tomcat/bin/tomcat-juli.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/lib/tools.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_192.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/System/Library/Java/Extensions/MRJToolkit.jar
+28-Oct-2019 13:29:45.156 FINE [main] org.apache.jasper.servlet.JspServlet.init Scratch dir for the JSP engine is: [/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/work/Catalina/localhost/Demo]
+28-Oct-2019 13:29:45.156 FINE [main] org.apache.jasper.servlet.JspServlet.init IMPORTANT: Do not modify the generated servlets
+28-Oct-2019 13:29:45.159 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:29:45.164 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:29:45.166 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [510] milliseconds
+28-Oct-2019 13:30:40.239 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service JspEngine --> /FindUsers.jsp
+28-Oct-2019 13:30:40.240 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service 	     ServletPath: /FindUsers.jsp
+28-Oct-2019 13:30:40.240 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service 	        PathInfo: null
+28-Oct-2019 13:30:40.240 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service 	        RealPath: /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/FindUsers.jsp
+28-Oct-2019 13:30:40.240 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service 	      RequestURI: /Demo/
+28-Oct-2019 13:30:40.240 FINE [http-nio-8080-exec-3] org.apache.jasper.servlet.JspServlet.service 	     QueryString: null
+28-Oct-2019 13:30:44.934 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service JspEngine --> /FindUsers.jsp
+28-Oct-2019 13:30:44.934 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service 	     ServletPath: /FindUsers.jsp
+28-Oct-2019 13:30:44.935 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service 	        PathInfo: null
+28-Oct-2019 13:30:44.935 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service 	        RealPath: /Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Demo/FindUsers.jsp
+28-Oct-2019 13:30:44.935 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service 	      RequestURI: /Demo/FindUsers.jsp
+28-Oct-2019 13:30:44.935 FINE [http-nio-8080-exec-4] org.apache.jasper.servlet.JspServlet.service 	     QueryString: null
+28-Oct-2019 13:31:47.391 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+28-Oct-2019 13:31:47.391 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:31:47.398 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:31:47.404 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+28-Oct-2019 13:31:47.405 FINE [main] org.apache.jasper.servlet.JspServlet.destroy JspServlet.destroy()
+28-Oct-2019 13:31:47.413 FINE [main] org.apache.jasper.servlet.JspServlet.destroy JspServlet.destroy()
+28-Oct-2019 13:31:47.417 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [Demo] registered the JDBC driver [com.mysql.cj.jdbc.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+28-Oct-2019 13:31:47.418 WARNING [main] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads The web application [Demo] appears to have started a thread named [mysql-cj-abandoned-connection-cleanup] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Object.wait(Native Method)
+ java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+ com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run(AbandonedConnectionCleanupThread.java:85)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+28-Oct-2019 13:31:47.419 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:31:47.420 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+28-Oct-2019 13:31:47.421 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+28-Oct-2019 13:31:47.421 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]

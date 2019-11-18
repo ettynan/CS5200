@@ -1,0 +1,6 @@
+127.0.0.1 - - [03/Nov/2019:15:01:16 -0500] "GET / HTTP/1.1" 404 1074
+0:0:0:0:0:0:0:1 - - [03/Nov/2019:15:01:17 -0500] "GET /HW4Erin_Tynan/WEB-INF/classes/blog/tools/Inserter.java HTTP/1.1" 404 1047
+0:0:0:0:0:0:0:1 - - [03/Nov/2019:15:01:28 -0500] "GET /HW4Erin_Tynan/WEB-INF/classes/blog/tools/Inserter.java HTTP/1.1" 404 1047
+0:0:0:0:0:0:0:1 - - [03/Nov/2019:15:02:11 -0500] "GET /HW4Erin_Tynan/ HTTP/1.1" 200 1728
+0:0:0:0:0:0:0:1 - - [03/Nov/2019:15:02:11 -0500] "GET /HW4Erin_Tynan/css/bootstrap.min.css HTTP/1.1" 200 155758
+0:0:0:0:0:0:0:1 - - [03/Nov/2019:15:02:11 -0500] "GET /HW4Erin_Tynan/js/bootstrap.min.js HTTP/1.1" 200 58072

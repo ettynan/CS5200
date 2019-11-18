@@ -1,0 +1,62 @@
+package blog.model;
+
+import java.util.Date;
+
+/**
+ * Reviews class - users create reviews for restaurants
+ */
+public class Reviews {
+    protected Integer ReviewId;
+    protected Date Created;
+    protected Integer Content;
+    protected String UserName;
+    protected Integer RestaurantId;
+
+    public Reviews(Integer reviewId, Date created, Integer content, String userName, Integer restaurantId) {
+        this.ReviewId = reviewId;
+        this.Created = created;
+        this.Content = content;
+        this.UserName = userName;
+        this.RestaurantId = restaurantId;
+    }
+
+    public Integer getReviewId() {
+        return ReviewId;
+    }
+
+    public void setReviewId(Integer reviewId) {
+        this.ReviewId = reviewId;
+    }
+
+    public Date getCreated() {
+        return Created;
+    }
+
+    public void setCreated(Date created) {
+        this.Created = created;
+    }
+
+    public Integer getContent() {
+        return Content;
+    }
+
+    public void setContent(Integer content) {
+        this.Content = content;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public blog.model.Restaurants getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(blog.model.Restaurants restaurant) {
+        this.restaurant = restaurant;
+    }
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="sdr"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="sdr"/>
+			<item value="sitdownrestaurants"/>
+			<item value="rev1"/>
+			<item value="list2loop"/>
+			<item value="rev3"/>
+			<item value="revlist1loop"/>
+			<item value="rev2"/>
+			<item value="&apos;"/>
+			<item value="Campanies"/>
+			<item value="Recommendations"/>
+			<item value="Reviews"/>
+			<item value="Integer"/>
+			<item value="Review"/>
+			<item value="Person"/>
+			<item value=".name"/>
+		</list>
+		<list key="replacehistory">
+			<item value="res1"/>
+			<item value="rev2"/>
+			<item value="list2"/>
+			<item value="rev"/>
+			<item value="revlist1"/>
+			<item value="&quot;"/>
+			<item value="Companies"/>
+			<item value="Reservations"/>
+			<item value="int"/>
+			<item value="Recommendation"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1106"/>
+		<item key="DIALOG_Y_ORIGIN" value="205"/>
+		<item key="DIALOG_WIDTH" value="294"/>
+		<item key="DIALOG_HEIGHT" value="408"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

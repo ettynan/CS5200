@@ -1,0 +1,70 @@
+package blog.dal;
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Types;
+import java.util.ArrayList;
+//import java.util.Date;
+import java.util.List;
+import java.sql.ResultSet;
+
+public class ReservationsDao {
+	protected ConnectionManager connectionManager;
+
+    private static ReservationsDao instance = null;
+
+    protected ReservationsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static ReservationsDao getInstance() {
+        if (instance == null) {
+            instance = new ReservationsDao();
+        }
+        return instance;
+    }
+
+    public Reservations create(Reservations reservations) throws SQLException {
+        String insertReview =
+                "INSERT INTO Reservations(ReservationsId, Start, End, Size, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertReview);
+            insertStmt.setInt(1, (reservations.getReservationId()));
+            insertStmt.setDate(2, (Date) (reservations.getStart()));
+            insertStmt.setInt(3, reservations.getSize());
+            insertStmt.setString(5, reservations.getUserName());
+            insertStmt.setInt(6, reservations.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int reviewId = -1;
+			if(resultKey.next()) {
+				reviewId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			reviews.setReviewId(reviewId);
+            
+            return reviews;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+}

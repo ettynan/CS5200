@@ -1,0 +1,31 @@
+package blog.dal;
+
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class SitDownRestaurantsDao extends RestaurantsDao {
+	// Single pattern: instantiation is limited to one object.
+	private static SitDownRestaurantsDao instance = null;
+	protected SitDownRestaurantsDao() {
+		super();
+	}
+	public static SitDownRestaurantsDao getInstance() {
+		if(instance == null) {
+			instance = new SitDownRestaurantsDao();
+		}
+		return instance;
+	}
+
+
+
+
+}
+
+

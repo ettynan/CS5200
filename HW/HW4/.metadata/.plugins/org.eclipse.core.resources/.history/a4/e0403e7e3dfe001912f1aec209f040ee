@@ -1,0 +1,213 @@
+package blog.dal;
+import blog.model.*;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.sql.ResultSet;
+
+public class ReviewsDao {
+	protected ConnectionManager connectionManager;
+
+    private static ReviewsDao instance = null;
+
+    protected ReviewsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static ReviewsDao getInstance() {
+        if (instance == null) {
+            instance = new ReviewsDao();
+        }
+        return instance;
+    }
+
+    public Reviews create(Reviews reviews) throws SQLException {
+        String insertReview =
+                "INSERT INTO Reviews(ReviewId, Created, Content, Rating, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertReview);
+            insertStmt.setInt(1, (reviews.getReviewId()));
+            insertStmt.setTimestamp(2, new Timestamp (reviews.getCreated().getTime()));
+            insertStmt.setString(3, reviews.getContent());
+            insertStmt.setFloat(3, reviews.getRating());
+            insertStmt.setString(4, reviews.getUserName());
+            insertStmt.setInt(5, reviews.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int reviewId = -1;
+			if(resultKey.next()) {
+				reviewId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			reviews.setReviewId(reviewId);
+            
+            return reviews;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+
+    public Reviews getReviewById(int reviewId) throws SQLException {
+        String selectReview = "SELECT FROM Reviews WHERE ReviewId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectReview);
+            selectStmt.setInt(1, reviewId);
+            results = selectStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+    
+    
+    public List<Reviews> getReviewsByUserName(String userName)
+			throws SQLException {
+		List<Reviews> reviews = new ArrayList<Reviews>();
+		String selectReviews =
+			"SELECT * " +
+			"FROM Reviews" +
+			"WHERE UserName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectReviews);
+			selectStmt.setString(1, userName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				Integer reviewId = results.getInt("ReviewId");
+			    Timestamp created = results.getTimestamp("Created");
+			    String content = results.getString("Content");
+			    Float rating = results.getFloat("Rating");
+			    String userName1 = results.getString("UserName");
+			    Integer restaurantId = results.getInt("RestaurantId");
+			    
+			    Reviews review = new Reviews(reviewId, created, content, rating, userName, restaurantId);
+                reviews.add(review);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return reviews;
+	}
+    
+
+    public List<Reviews> getReviewsByRestaurantId(int restaurantId)
+			throws SQLException {
+		List<Reviews> reviews = new ArrayList<Reviews>();
+		String selectReviews =
+			"SELECT * " +
+			"FROM Reviews" +
+			"WHERE RestaurantId=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectReviews);
+			selectStmt.setInt(1, restaurantId);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int reviewId = results.getInt("ReviewId");
+			    Timestamp created = results.getTimestamp("Created");
+			    String content = results.getString("Content");
+			    Float rating = results.getFloat("Rating");
+			    String userName = results.getString("UserName");
+			    int restaurantId1 = results.getInt("RestaurantId");
+			    
+			    Reviews review = new Reviews(reviewId, created, content, rating, userName, restaurantId);
+                reviews.add(review);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return reviews;
+	}
+    
+    /**
+     * Delete the Reviews instance.
+     * This runs a DELETE statement.
+     */
+    public Reviews delete(Reviews reviews) throws SQLException {
+        String deleteReview = "DELETE FROM Reviews WHERE reviewId=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteReview);
+            deleteStmt.setInt(1, reviews.getReviewId());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+}

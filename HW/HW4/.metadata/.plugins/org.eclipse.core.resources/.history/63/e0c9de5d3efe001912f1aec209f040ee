@@ -1,0 +1,95 @@
+package blog.dal;
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.sql.ResultSet;
+
+public class RecommendationsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RecommendationsDao instance = null;
+
+    protected RecommendationsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static RecommendationsDao getInstance() {
+        if (instance == null) {
+            instance = new RecommendationsDao();
+        }
+        return instance;
+    }
+
+    
+    public Recommendations create(Recommendations recommendations) throws SQLException {
+        String insertRecommendation =
+                "INSERT INTO Recommendations(RecommendationId, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertRecommendation);
+            insertStmt.setInt(1, (recommendations.getRecommendationId()));
+            insertStmt.setString(2, recommendations.getUserName());
+            insertStmt.setInt(3, recommendations.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int recommendationId = -1;
+			if(resultKey.next()) {
+				recommendationId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			recommendations.setRcommendationId(recommendationId);
+            
+            return recommendations;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Recommendations getRecommendationsById(int recommendationsId) throws SQLException {
+        String selectRecommendation = "SELECT FROM Recommendations WHERE RecommendationsId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectRecommendation);
+            selectStmt.setInt(1, recommendationsId);
+            results = selectStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+}

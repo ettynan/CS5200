@@ -1,0 +1,53 @@
+package blog.model;
+
+
+import java.math.BigInteger;
+import java.util.Date;
+
+
+/**
+ * CreditCard concrete class depicting user's creditcards
+ */
+public class CreditCards {
+    protected Long CardNumber;
+    protected Date Expiration;
+    protected Users user;
+
+    // This constructor can be used for reading records from MySQL, where we have all fields.
+    public CreditCards(Long cardNumber, Date expiration, Users user) {
+        this.CardNumber = cardNumber;
+        this.Expiration = expiration;
+        this.user = user;
+    }
+
+    // This constructor can be used for reading records from MySQL, where we only have the postId,
+    // such as a foreign key reference to PostId.
+    // Given CardNumber, we can fetch the full CreditCard record.
+    public CreditCards(Long cardNumber) {
+        this.CardNumber = cardNumber;
+    }
+
+    public long getCardNumber() {
+        return CardNumber;
+    }
+
+    public void setCardNumber(Long cardNumber) {
+        this.CardNumber = cardNumber;
+    }
+
+    public Date getExpiration() {
+        return Expiration;
+    }
+
+    public void setExpiration(Date expiration) {
+        this.Expiration = expiration;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+}

@@ -1,0 +1,25 @@
+package blog.model;
+
+/**
+ * Class for TakeOut restaurants extending Restaurants
+ */
+public class TakeOutRestaurants extends blog.model.Restaurants {
+    protected Integer MaxWaitTime;
+
+    public TakeOutRestaurants(Integer restaurantId, String name, String description, String menu, String hours,
+                              boolean active, CuisineType cuisine, String street1, String street2,
+                              String city, String state, Integer zip, String companyName,
+                              Restaurants restaurant, Integer maxWaitTime) {
+        super(restaurantId, name, description, menu, hours, active, cuisine, street1, street2, city, state, zip,
+                companyName);
+        this.MaxWaitTime = maxWaitTime;
+    }
+
+    public Integer getMaxWaitTime() {
+        return MaxWaitTime;
+    }
+
+    public void setMaxWaitTime(Integer maxWaitTime) {
+        this.MaxWaitTime = maxWaitTime;
+    }
+}

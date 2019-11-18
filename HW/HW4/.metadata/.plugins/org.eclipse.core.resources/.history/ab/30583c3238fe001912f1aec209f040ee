@@ -1,0 +1,240 @@
+package blog.dal;
+
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+public class RestaurantsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RestaurantsDao instance = null;
+
+    protected RestaurantsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static RestaurantsDao getInstance() {
+        if (instance == null) {
+            instance = new RestaurantsDao();
+        }
+        return instance;
+    }
+    
+    
+    public Restaurants create(Restaurants restaurants) throws SQLException {
+        String insertRestaurant =
+                "INSERT INTO Restaurants(RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1, Street2, "
+                + "City, State, Zip, CompanyName) " +
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertRestaurant);
+            insertStmt.setInt(1, (restaurants.getRestaurantId()));
+            insertStmt.setString(2, (restaurants.getName()));
+            insertStmt.setString(3, (restaurants.getDescription()));
+            insertStmt.setString(4, (restaurants.getMenu()));
+            insertStmt.setString(5, (restaurants.getHours()));
+            insertStmt.setBoolean(6, (restaurants.isActive()));
+            insertStmt.setString(7, (restaurants.getCuisine().name()));
+            insertStmt.setString(8, (restaurants.getStreet1()));
+            insertStmt.setString(9, (restaurants.getStreet2()));
+            insertStmt.setString(10, (restaurants.getCity()));
+            insertStmt.setString(11, (restaurants.getState()));
+            insertStmt.setInt(12, (restaurants.getZip()));
+            insertStmt.setString(13, (restaurants.getCompanyName()));
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int restaurantsId = -1;
+			if(resultKey.next()) {
+				restaurantsId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			restaurants.setRestaurantId(restaurantsId);
+            
+            
+            return restaurants;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Restaurants getRestaurantById(int restaurantId) throws SQLException {
+            String selectRestaurant = "SELECT FROM Restaurants WHERE RestaurantId=?;";
+            Connection connection = null;
+            PreparedStatement selectStmt = null;
+            ResultSet results = null;
+            try {
+                connection = connectionManager.getConnection();
+                selectStmt = connection.prepareStatement(selectRestaurant);
+                selectStmt.setLong(1, restaurantId);
+                results = selectStmt.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            } finally {
+                if(connection != null) {
+                    connection.close();
+                }
+                if(selectStmt != null) {
+                    selectStmt.close();
+                }
+                if(results != null) {
+                    results.close();
+                }
+            }
+            return null;
+        }
+
+    /**
+	 * Read the Restaurants instance.
+	 **/
+	public List<Restaurants> getRestaurantsbyCompanyName(String companyName)
+			throws SQLException {
+		List<Restaurants> restaurants = new ArrayList<Restaurants>();
+		String selectRestaurants =
+			"SELECT * " +
+			"FROM Restaurants" +
+			"WHERE CompanyName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectRestaurants);
+			selectStmt.setString(1, companyName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				Integer restaurantId = results.getInt("RestaurantId");
+			    String name = results.getString("Name");
+			    String description = results.getString("Description");
+			    String menu = results.getString("Menu");
+			    String hours = results.getString("Hours");
+			    boolean active = results.getBoolean("Active");
+                Restaurants.CuisineType cuisine = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+			    String street1 = results.getString("Street1");
+			    String street2 = results.getString("Street2");
+			    String city = results.getString("City");
+			    String state = results.getString("State");
+			    Integer zip = results.getInt("Zip");
+			    
+			    Restaurants restaurant = new Restaurants(restaurantId, name, description, menu, hours, active,
+                        cuisine, street1, street2, city, state, zip, companyName);
+                restaurants.add(restaurant);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return restaurants;
+	}
+    
+	public List<Restaurants> getRestaurantsByCuisine(Restaurants.CuisineType cuisine) throws SQLException {
+        List<Restaurants> restaurants = new ArrayList<Restaurants>();
+        String selectRestaurants =
+            "SELECT * " +
+            "FROM Restaurants " +
+            "WHERE Cuisine=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectRestaurants);
+            selectStmt.setString(1, cuisine.name());
+            results = selectStmt.executeQuery();
+            while(results.next()) {
+                int restaurantId = results.getInt("RestaurantId");
+                String name = results.getString("Name");
+                String description = results.getString("Description");
+                String menu = results.getString("Menu");
+                String hours = results.getString("Hours");
+                Boolean active = results.getBoolean("Active");
+                Restaurants.CuisineType cuisine1 = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+                String street1 = results.getString("Street1");
+                String street2 = results.getString("Street2");
+                String city = results.getString("City");
+                String state = results.getString("State");
+                int zip = results.getInt("Zip");
+                String companyName = results.getString("CompanyName");
+                
+                Restaurants restaurant = new Restaurants(restaurantId, name, description, menu, hours, active,
+                        cuisine, street1, street2, city, state, zip, companyName);
+                restaurants.add(restaurant);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return restaurants;
+    }
+	
+    /**
+     * Delete the Restaurants instance.
+     * This runs a DELETE statement.
+     */
+    public Restaurants delete(Restaurants restaurant) throws SQLException {
+        String deleteRestaurant = "DELETE FROM Restaurants WHERE name=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteRestaurant);
+            deleteStmt.setString(1, restaurant.getName());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+	
+}

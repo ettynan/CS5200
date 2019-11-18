@@ -1,0 +1,53 @@
+package blog.dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import blog.model.*;
+
+public class RestaurantsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RestaurantsDao instance = null;
+
+    protected RestaurantsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static RestaurantsDao getInstance() {
+        if (instance == null) {
+            instance = new RestaurantsDao();
+        }
+        return instance;
+    }
+    
+    
+    public Restaurants create(Restaurants restaurants) throws SQLException {
+        String insertRestaurant =
+                "INSERT INTO Restaurants(CardNumner,Expiration,UserName) " +
+                        "VALUES(?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertRestaurant);
+            insertStmt.setLong(1, (Restaurants.getCardNumber()));
+            insertStmt.setTimestamp(2, new Timestamp(creditCards.getExpiration().getTime()));
+            insertStmt.setString(3, creditCards.getUserName());
+            insertStmt.executeUpdate();
+            return creditCards;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+}

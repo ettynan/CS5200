@@ -1,0 +1,438 @@
+package blog.tools;
+
+import blog.dal.*;
+import blog.model.*;
+import blog.model.Restaurants.CuisineType;
+
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * main() runner, used for the app demo.
+ * 
+ * Instructions:
+ * 1. Create a new MySQL schema and then run the CREATE TABLE statements from lecture:
+ * http://goo.gl/86a11H.
+ * 2. Update ConnectionManager with the correct user, password, and schema.
+ */
+public class Inserter {
+
+	public static void main(String[] args) throws SQLException {
+		// DAO instances.
+		UsersDao usersDao = UsersDao.getInstance();
+		CreditCardsDao creditcardsDao = CreditCardsDao.getInstance();
+		CompaniesDao companiesDao = CompaniesDao.getInstance();
+		RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
+		SitDownDao sitDownDao = SitDownDao.getInstance();
+		TakeOutDao takeOutDao = TakeOutDao.getInstance();
+		FoodCartDao foodCartDao = FoodCartDao.getInstance();
+		ReviewsDao reviewsDao = ReviewsDao.getInstance();
+		RecommendationsDao recommendationsDao = RecommendationsDao.getInstance();
+		ReservationsDao reservationsDao = ReservationsDao.getInstance();
+
+		// INSERT objects from our model.
+		Users user = new Users("Bruce","password","Bruce","C","bruce@mail.com","5555555");
+		user = usersDao.create(user);
+		Users user1 = new Users("TT","password","Tony","D","tony@mail.com","5555555");
+		user1 = usersDao.create(user1);
+		Users user2 = new Users("DK","password","Daniel","K","dan@mail.com","5555555");
+		user2 = usersDao.create(user2);
+		Users user3 = new Users("James","password","James","M","james@mail.com","5555555");
+		user3 = usersDao.create(user3);
+		Users user4 = new Users("Steve","password","Steve","N","steve@mail.com","5555555");
+		user4 = usersDao.create(user4);
+		
+		Companies company = new Companies("company1","about company1");
+		company = companiesDao.create(company);
+		Companies company2 = new Companies("company2","about company2");
+		company2 = companiesDao.create(company2);
+		Companies company3 = new Companies("company3","about company3");
+		company3 = companiesDao.create(company3);
+		
+		Restaurants restaurant = new Restaurants(1,"restaurant1","about restaurant","menu","hours", true, CuisineType.AFRICAN,"street1","street2","seattle","wa",98195,"company1");
+		restaurant = restaurantsDao.create(restaurant);
+		Restaurants restaurant2 = new Restaurants(2,"restaurant2","about restaurant","menu","hours", true, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company1");
+		restaurant2 = restaurantsDao.create(restaurant2);
+		Restaurants restaurant3 = new Restaurants(3,"restaurant3","about restaurant","menu","hours", true, CuisineType.ASIAN,"street1","street2","seattle","wa",98195,"company1");
+		restaurant3 = restaurantsDao.create(restaurant3);
+		Restaurants restaurant4 = new Restaurants(4,"restaurant4","about restaurant","menu","hours", true, CuisineType.EUROPEAN,"street1","street2","seattle","wa",98195,"company1");
+		restaurant = restaurantsDao.create(restaurant4);
+		Restaurants restaurant5 = new Restaurants(5,"restaurant5","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company1");
+		restaurant5 = restaurantsDao.create(restaurant5);
+		Restaurants restaurant6 = new Restaurants(6,"restaurant6","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company2");
+		restaurant6 = restaurantsDao.create(restaurant6);
+		Restaurants restaurant7 = new Restaurants(7,"restaurant7","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company2");
+		restaurant7 = restaurantsDao.create(restaurant7);
+		Restaurants restaurant8 = new Restaurants(8,"restaurant8","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company2");
+		restaurant8 = restaurantsDao.create(restaurant8);
+		Restaurants restaurant9 = new Restaurants(9,"restaurant9","about restaurant","menu","hours", false, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company2");
+		restaurant9 = restaurantsDao.create(restaurant9);
+		Restaurants restaurant10 = new Restaurants(10,"restaurant10","about restaurant","menu","hours", true, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company3");
+		restaurant10 = restaurantsDao.create(restaurant10);
+		
+		SitDown sitDown = new SitDown(1,"restaurant1","about restaurant","menu","hours", true, CuisineType.AFRICAN,"street1","street2","seattle","wa",98195,"company1", 100);
+		sitDown = sitDownDao.create(sitDown);
+		SitDown sitDown2 = new SitDown(2,"restaurant2","about restaurant","menu","hours", true, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company1", 200);
+		sitDown2 = sitDownDao.create(sitDown2);
+		SitDown sitDown3 = new SitDown(3,"restaurant3","about restaurant","menu","hours", true, CuisineType.ASIAN,"street1","street2","seattle","wa",98195,"company1", 300);
+		sitDown3 = sitDownDao.create(sitDown3);
+		
+		TakeOut takeOut = new TakeOut(4,"restaurant4","about restaurant","menu","hours", true, CuisineType.EUROPEAN,"street1","street2","seattle","wa",98195,"company1", 60);
+		takeOut = takeOutDao.create(takeOut);
+		TakeOut takeOut2 = new TakeOut(5,"restaurant5","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company1", 90);
+		takeOut2 = takeOutDao.create(takeOut2);
+		
+		FoodCart foodCart = new FoodCart(6,"restaurant6","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company3", true);
+		foodCart = foodCartDao.create(foodCart);
+		FoodCart foodCart2 = new FoodCart(7,"restaurant7","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company3", true);
+		foodCart2 = foodCartDao.create(foodCart2);
+		FoodCart foodCart3 = new FoodCart(8,"restaurant8","about restaurant","menu","hours", true, CuisineType.HISPANIC,"street1","street2","seattle","wa",98195,"company3", true);
+		foodCart3 = foodCartDao.create(foodCart3);
+		FoodCart foodCart4 = new FoodCart(9,"restaurant9","about restaurant","menu","hours", false, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company3", true);
+		foodCart4 = foodCartDao.create(foodCart4);
+		FoodCart foodCart5 = new FoodCart(10,"restaurant10","about restaurant","menu","hours", true, CuisineType.AMERICAN,"street1","street2","seattle","wa",98195,"company3", false);
+		foodCart5 = foodCartDao.create(foodCart5);
+		
+		Date date = new Date();
+		Reviews review = new Reviews(1,date,"Delightful!",5.0,"Bruce",1);
+		review = reviewsDao.create(review);
+		Reviews review2 = new Reviews(2,date,"Superb!",5.0,"Bruce",2);
+		review2 = reviewsDao.create(review2);
+		Reviews review3 = new Reviews(3,date,"Superb!",5.0,"Bruce",3);
+		review3 = reviewsDao.create(review3);
+		Reviews review4 = new Reviews(4,date,"Not good!",1.0,"James",9);
+		review4 = reviewsDao.create(review4);
+		Reviews review5 = new Reviews(5,date,"Not good at all!",1.0,"James",10);
+		review5 = reviewsDao.create(review5);
+		
+		Recommendations recommendation = new Recommendations(1,"Bruce",1);
+		recommendation = recommendationsDao.create(recommendation);
+		Recommendations recommendation2 = new Recommendations(2,"Bruce",2);
+		recommendation2 = recommendationsDao.create(recommendation2);
+		Recommendations recommendation3 = new Recommendations(3,"Bruce",3);
+		recommendation3 = recommendationsDao.create(recommendation3);
+		Recommendations recommendation4 = new Recommendations(4,"Bruce",4);
+		recommendation4 = recommendationsDao.create(recommendation4);
+		Recommendations recommendation5 = new Recommendations(5,"Bruce",5);
+		recommendation5 = recommendationsDao.create(recommendation5);
+		Recommendations recommendation6 = new Recommendations(6,"DK",2);
+		recommendation6 = recommendationsDao.create(recommendation6);
+		Recommendations recommendation7 = new Recommendations(7,"DK",3);
+		recommendation7 = recommendationsDao.create(recommendation7);
+		Recommendations recommendation8 = new Recommendations(8,"TT",3);
+		recommendation8 = recommendationsDao.create(recommendation8);
+		
+		Reservations reservation = new Reservations(1, date, date,2,"Bruce",1);
+		reservation = reservationsDao.create(reservation);
+		Reservations reservation2 = new Reservations(2, date, date,2,"Bruce",1);
+		reservation2 = reservationsDao.create(reservation2);
+		Reservations reservation3 = new Reservations(3, date, date,2,"Bruce",1);
+		reservation3 = reservationsDao.create(reservation3);
+		Reservations reservation4 = new Reservations(4, date, date,2,"Bruce",2);
+		reservation4 = reservationsDao.create(reservation4);
+		Reservations reservation5 = new Reservations(5, date, date,2,"Bruce",2);
+		reservation5 = reservationsDao.create(reservation5);
+		Reservations reservation6 = new Reservations(6, date, date,2,"TT",3);
+		reservation6 = reservationsDao.create(reservation6);
+		Reservations reservation7 = new Reservations(7, date, date,2,"TT",3);
+		reservation7 = reservationsDao.create(reservation7);
+		Reservations reservation8 = new Reservations(8, date, date,2,"TT",3);
+		reservation8 = reservationsDao.create(reservation8);
+		Reservations reservation9 = new Reservations(9, date, date,2,"TT",3);
+		reservation9 = reservationsDao.create(reservation9);
+		
+		CreditCards creditCard = new CreditCards(3499432187650987l,date,"Bruce");
+		creditCard = creditcardsDao.create(creditCard);
+		CreditCards creditCard2 = new CreditCards(3488432187650987l,date,"Bruce");
+		creditCard2 = creditcardsDao.create(creditCard2);
+		CreditCards creditCard3 = new CreditCards(3799432187650987l,date,"Bruce");
+		creditCard3 = creditcardsDao.create(creditCard3);
+		CreditCards creditCard4 = new CreditCards(6011432187650987l,date,"Bruce");
+		creditCard4 = creditcardsDao.create(creditCard4);
+		CreditCards creditCard5 = new CreditCards(6011432187650988l,date,"Bruce");
+		creditCard5 = creditcardsDao.create(creditCard5);
+		CreditCards creditCard6 = new CreditCards(6441432187650987l,date,"Bruce");
+		creditCard6 = creditcardsDao.create(creditCard6);
+		CreditCards creditCard7 = new CreditCards(6451432187650987l,date,"Bruce");
+		creditCard7 = creditcardsDao.create(creditCard7);
+		CreditCards creditCard8 = new CreditCards(5199432187650987l,date,"Bruce");
+		creditCard8 = creditcardsDao.create(creditCard8);
+		CreditCards creditCard9 = new CreditCards(5499432187650987l,date,"Bruce");
+		creditCard9 = creditcardsDao.create(creditCard9);
+		CreditCards creditCard10 = new CreditCards(5499432187650988l,date,"Bruce");
+		creditCard10 = creditcardsDao.create(creditCard10);
+		CreditCards creditCard11 = new CreditCards(5499432187650989l,date,"Bruce");
+		creditCard11 = creditcardsDao.create(creditCard11);
+		CreditCards creditCard12 = new CreditCards(4499432187650987l,date,"Bruce");
+		creditCard12 = creditcardsDao.create(creditCard12);
+		CreditCards creditCard13 = new CreditCards(4499432187650989l,date,"Bruce");
+		creditCard13 = creditcardsDao.create(creditCard13);
+		
+		// READ. 
+		Users p1 = usersDao.getUserFromUserName("C");
+		System.out.format("Reading user: u:%s f:%s l:%s e:%s p:%s \n",
+			p1.getUserName(), p1().getPassword(), p1.getFirstName(), p1.getLastName(), p1.getEmail(), p1.getPhone());
+		
+		Companies c1 = companiesDao.getCompanyByCompanyName("company1");
+		System.out.format("Reading company: n:%s a:%s \n",
+			c1.getCompanyName(), c1.getAbout());
+		
+		Restaurants r1 = restaurantsDao.getRestaurantById(3);
+		System.out.format("Reading restaurant: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s \n",
+		           r1.getRestaurantId(), r1.getName(), r1.getDescription(), r1.getMenu(), r1.getHours(), r1.isActive(), 
+		           r1.getCuisine(),r1.getStreet1(), r1.getStreet2(), r1.getCity(), r1.getState(), r1.getZip(), 
+		           r1.getCompanyName());
+
+		List<Restaurants> rList1 = restaurantsDao.getRestaurantsByCompanyName("company2");
+//		System.out.format("Reading restaurant: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s \n",
+//			r1.getRestaurantId(), r1.getName(), r1.getDescription(), r1.getMenu(), r1.getHours(), r1.isActive(),
+//			r1.getCuisine(), r1.getStreet1(), r1.getStreet2(), r1.getCity(), r1.getState(), r1.getZip(), 
+//			r1.getCompanyName());
+		for(Restaurants r : rList1) {
+			System.out.format("Looping restaurants: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s  \n",
+					r.getRestaurantId(), r.getName(), r.getDescription(), r.getMenu(), r.getHours(), r.isActive(),
+					r.getCuisine(), r.getStreet1(), r.getStreet2(), r.getCity(), r.getState(), r.getZip(), 
+					r.getCompanyName());
+		}
+		
+		List<Restaurants> rList2 = restaurantsDao.getRestaurantsByCuisine(CuisineType.EUROPEAN);
+		for(Restaurants r : rList2) {
+			System.out.format("Looping restaurants: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s  \n",
+					r.getRestaurantId(), r.getName(), r.getDescription(), r.getMenu(), r.getHours(), r.isActive(),
+					r.getCuisine(), r.getStreet1(), r.getStreet2(), r.getCity(), r.getState(), r.getZip(), 
+					r.getCompanyName());
+		}
+		
+		//	SitDown
+		SitDown sd1 = sitDownDao.getSitDownById(2);
+		System.out.format("Reading Sit Down restaurant: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cap:%d \n",
+				sd1.getRestaurantId(), sd1.getName(), sd1.getDescription(), sd1.getMenu(), sd1.getHours(), sd1.isActive(), 
+				sd1.getCuisine(),sd1.getStreet1(), sd1.getStreet2(), sd1.getCity(), sd1.getState(), sd1.getZip(), 
+				sd1.getCompanyName(), sd1.getCapacity());
+
+		List<SitDown> sdList1 = sitDownDao.getSitDownByCompanyName("company1");
+		for(SitDown sd : sdList1) {
+			System.out.format("Looping Sit Down restaurants: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cap:%d  \n",
+					sd.getRestaurantId(), sd.getName(), sd.getDescription(), sd.getMenu(), sd.getHours(), sd.isActive(),
+					sd.getCuisine(), sd.getStreet1(), sd.getStreet2(), sd.getCity(), sd.getState(), sd.getZip(), 
+					sd.getCompanyName(), sd.getCapacity());
+		}
+		
+		//	Take Out
+		TakeOut to1 = takeOutDao.getTakeOutById(4);
+		System.out.format("Reading Take Out restaurant: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s time:%d \n",
+				to1.getRestaurantId(), to1.getName(), to1.getDescription(), to1.getMenu(), to1.getHours(), to1.isActive(), 
+				to1.getCuisine(),to1.getStreet1(), to1.getStreet2(), to1.getCity(), to1.getState(), to1.getZip(), 
+				to1.getCompanyName(), to1.getMaxWaitTime());
+
+		List<TakeOut> toList1 = takeOutDao.getTakeOutByCompanyName("company1");
+		for(TakeOut to : toList1) {
+			System.out.format("Looping Take Out restaurants: i:%s n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%s p:%s time:%s \n",
+					to.getRestaurantId(), to.getName(), to.getDescription(), to.getMenu(), to.getHours(), to.isActive(),
+					to.getCuisine(), to.getStreet1(), to.getStreet2(), to.getCity(), to.getState(), to.getZip(), 
+					to.getCompanyName(), to.getMaxWaitTime());
+		}
+		
+		//	Food Cart
+		FoodCart fc1 = foodCartDao.getFoodCartById(7);
+		System.out.format("Reading Food Cart restaurant: i:%s n:%s d:%s m:%s h:%s a:%s c:%s s:%s t:%s y:%s e:%s z:%s p:%s lic:%s \n",
+				fc1.getRestaurantId(), fc1.getName(), fc1.getDescription(), fc1.getMenu(), fc1.getHours(), fc1.isActive(), 
+				fc1.getCuisine(),fc1.getStreet1(), fc1.getStreet2(), fc1.getCity(), fc1.getState(), fc1.getZip(), 
+				fc1.getCompanyName(), fc1.isLicensed());
+
+		List<FoodCart> fcList1 = foodCartDao.getFoodCartByCompanyName("company3");
+		for(FoodCart fc : fcList1) {
+			System.out.format("Looping Food Cart restaurants: i:%s n:%s d:%s m:%s h:%s a:%s c:%s s:%s t:%s y:%s e:%s z:%s p:%s lic:%s  \n",
+					fc.getRestaurantId(), fc.getName(), fc.getDescription(), fc.getMenu(), fc.getHours(), fc.isActive(),
+					fc.getCuisine(), fc.getStreet1(), fc.getStreet2(), fc.getCity(), fc.getState(), fc.getZip(), 
+					fc.getCompanyName(), fc.isLicensed());
+		}
+
+		
+		//	Reviews
+		Reviews rev1 = reviewsDao.getReviewById(2);
+		System.out.format("Reading Review by Id: id:%s cr:%s co:%s r:%s u:%s restid:%s \n",
+				rev1.getReviewId(), rev1.getCreated(), rev1.getContent(), rev1.getRating(), rev1.getUserName(), rev1.getRestaurantId());
+		List<Reviews> revlist1 = reviewsDao.getReviewsByRestaurantId(2);
+		for(Reviews rev : revlist1) {
+			System.out.format("Reading Reviews by RestId: i:%s c:%s c:%s r:%s u:%s restid:%s \n",
+					rev.getReviewId(), rev.getCreated(), rev.getContent(), rev.getRating(), rev.getUserName(), rev.getRestaurantId());
+		}
+		List<Reviews> list2 = reviewsDao.getReviewsByUserName("James");
+		for(Reviews rev2 : list2) {
+			System.out.format("Reading Reviews by RestId: i:%s c:%s c:%s r:%s u:%s restid:%s \n",
+					rev2.getReviewId(), rev2.getCreated(), rev2.getContent(), rev2.getRating(), rev2.getUserName(), rev2.getRestaurantId());
+		}
+	
+		//Recommendations
+	    Recommendations rec1 = recommendationsDao.getRecommendationsById(2);
+	    System.out.format("Reading Recommendations by Id: i:%s, u:%s restid:%s \n",
+	    		rec1.getRecommendationId(), rec1.getUserName(), rec1.getRestaurantId());
+	    List<Recommendations> reclist1 = recommendationsDao.getRecommendationsByRestaurantId(2);
+	    for(Recommendations rec : reclist1) {
+	        System.out.format("Reading Recommendations by restId: i:%s, u:%s restid:%s",
+	                rec.getRecommendationId(), rec.getUserName(), rec.getRestaurantId());
+	    }
+	    List<Recommendations> reclist2 = recommendationsDao.getRecommendationsByUserName("Bruce");
+	    for(Recommendations rec3loop : reclist2) {
+	        System.out.format("Reading Recommendations by UserName: i:%s, u:%s restid:%s",
+	                rec3loop.getRecommendationId(), rec3loop.getUserName(), rec3loop.getRestaurantId());
+	    }
+       
+        //	Reservations
+	    Reservations res1 = reservationsDao.getReservationById(2);
+	    System.out.format("Reading Reservations by Id: i:%s st:%s e:%s s:%s u:%s restid:%s \n",
+	            res1.getReservationId(), res1.getStart(), res1.getEnd(), res1.getSize(), res1.getUserName(), res1.getRestaurantId());
+	    List<Reservations> reslist1 = reservationsDao.getReservationsByRestaurantId(2);
+	    for(Reservations res : reslist1) {
+	        System.out.format("Reading Reservations by ReservationId: i:%s st:%s e:%s s:%s u:%s restid:%s \n",
+	  	            res.getReservationId(), res.getStart(), res.getEnd(), res.getSize(), res.getUserName(), res.getRestaurantId());
+	    }
+	    List<Reservations> reslist2 = reservationsDao.getReservationsByUserName("James");
+	    for(Reservations res2 : reslist2) {
+	        System.out.format("Reading Reservations by UserName: i:%s st:%s e:%s s:%s u:%s restid:%s \n",
+	    	 	    res2.getReservationId(), res2.getStart(), res2.getEnd(), res2.getSize(), res2.getUserName(), res2.getRestaurantId());
+	    }
+			
+		//	Creditcards
+	    CreditCards cd1 = creditcardsDao.getCreditCard(3499432187650987l);
+	    System.out.format("Reading card number: c:%s e:%s u:%s \n",
+	    		cd1.getCardNumber(), cd1.getExpiration(), cd1.getUserName());
+        List<CreditCards> list1 = creditcardsDao.getCreditCardsByUserName("Bruce");
+        for(CreditCards c2 : list1) {
+        	System.out.format("Looping cards for Bruce: c:%s e:%s u:%s \n",
+        			c2.getCardNumber(), c2.getExpiration(), c2.getUserName());
+        }
+	
+
+		//UPDATE
+		//credit cards and companies have an update method
+	    //Before update
+		System.out.format("Reading card before update: c:%s e:%s u:%s \n",
+	            cd1.getCardNumber(), cd1.getExpiration(), cd1.getUserName());
+	    //updating
+	    Date date2 = new Date();
+	    creditcardsDao.updateExpiration(cd1, (java.sql.Date) date2);
+	    //after update
+	    System.out.format("Reading card number after update: CardNumber:%s Expiration:%s UserName:%s \n",
+	            cd1.getCardNumber(), cd1.getExpiration(), cd1.getUserName());
+		
+	    
+	    // Before update
+	    System.out.format("Reading company before update: n:%s a:%s \n",
+	            c1.getCompanyName(), c1.getAbout());
+	    // Update
+	    companiesDao.updateAbout(c1, "Hello updated");
+	    // After update
+	    System.out.format("Reading company before update: n:%s a:%s \n",
+	    		c1.getCompanyName(), c1.getAbout());
+	    
+	    
+		//DELETE
+	    
+	    //Users before
+	    System.out.format("Reading user before delete: u:%s f:%s l:%s c:%s e:%s u:%s \n",
+	            user4.getUserName(), user4.getFirstName(), user4.getLastName(), user4.getEmail(), user4.getPhone());
+        // delete
+	    usersDao.delete(user4);
+	    //after delete
+
+        System.out.format("Reading user before delete: u:%s f:%s l:%s c:%s e:%s u:%s\n",
+	            user4.getUserName(), user4.getFirstName(), user4.getLastName(), user4.getEmail(), user4.getPhone());
+        
+        
+        //CreditCards before
+        System.out.format("Reading card before delete: c:%s e:%s u:%s \n",
+	            cd1.getCardNumber(), cd1.getExpiration(), cd1.getUserName());
+	    // delete
+        creditcardsDao.delete(creditCard10);
+	    //after delete
+	    System.out.format("Reading card number after delete: c:%s e:%s u:%s \n",
+	            cd1.getCardNumber(), cd1.getExpiration(), cd1.getUserName());
+        
+	    
+	    // Companies before delete
+        System.out.format("Reading company before delete: n:%s a:%s \n",
+	            c1.getCompanyName(), c1.getAbout());
+        // delete
+        companiesDao.delete(c1);
+        // after delete
+        System.out.format("Reading company before delete: n:%s a:%s \n",
+	            c1.getCompanyName(), c1.getAbout());
+        
+        
+        //Restaurants before delete
+        System.out.format("Reading restaurant before delete: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s \n",
+                restaurant8.getRestaurantId(), restaurant8.getName(), restaurant8.getDescription(), restaurant8.getMenu(), restaurant8.getHours(),
+                restaurant8.isActive(), restaurant8.getCuisine(), restaurant8.getStreet1(), restaurant8.getStreet2(), restaurant8.getCity(),
+                restaurant8.getState(), restaurant8.getZip(), restaurant8.getCompanyName());
+        //delete
+        restaurantsDao.delete(restaurant8);
+        // after delete
+        System.out.format("Reading restaurant after delete: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s \n",
+                restaurant8.getRestaurantId(), restaurant8.getName(), restaurant8.getDescription(), restaurant8.getMenu(), restaurant8.getHours(),
+                restaurant8.isActive(), restaurant8.getCuisine(), restaurant8.getStreet1(), restaurant8.getStreet2(), restaurant8.getCity(),
+                restaurant8.getState(), restaurant8.getZip(), restaurant8.getCompanyName());
+        
+        
+        // Sit Down
+        System.out.format("Reading SitDown before deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		sitDown2.getRestaurantId(), sitDown2.getName(), sitDown2.getDescription(), sitDown2.getMenu(), sitDown2.getHours(), sitDown2.isActive(), sitDown2.getCuisine(),
+        		sitDown2.getStreet1(), sitDown2.getStreet2(), sitDown2.getCity(), sitDown2.getState(), sitDown2.getZip(), sitDown2.getCompanyName(), sitDown2.getCapacity());
+        sitDownDao.delete(sitDown2);
+        System.out.format("Reading SitDown after deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		sitDown2.getRestaurantId(), sitDown2.getName(), sitDown2.getDescription(), sitDown2.getMenu(), sitDown2.getHours(), sitDown2.isActive(), sitDown2.getCuisine(),
+        		sitDown2.getStreet1(), sitDown2.getStreet2(), sitDown2.getCity(), sitDown2.getState(), sitDown2.getZip(), sitDown2.getCompanyName(), sitDown2.getCapacity());
+        
+        
+        // Take Out
+        System.out.format("Reading TakeOut before deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		takeOut.getRestaurantId(), takeOut.getName(), takeOut.getDescription(), takeOut.getMenu(), takeOut.getHours(), takeOut.isActive(), takeOut.getCuisine(),
+        		takeOut.getStreet1(), takeOut.getStreet2(), takeOut.getCity(), takeOut.getState(), takeOut.getZip(), takeOut.getCompanyName(), takeOut.getMaxWaitTime());
+        takeOutDao.delete(takeOut);
+        System.out.format("Reading TakeOut after deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		takeOut.getRestaurantId(), takeOut.getName(), takeOut.getDescription(), takeOut.getMenu(), takeOut.getHours(), takeOut.isActive(), takeOut.getCuisine(),
+        		takeOut.getStreet1(), takeOut.getStreet2(), takeOut.getCity(), takeOut.getState(), takeOut.getZip(), takeOut.getCompanyName(), takeOut.getMaxWaitTime());
+        
+        
+        // Food Cart
+        System.out.format("Reading FoodCart before deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		foodCart2.getRestaurantId(), foodCart2.getName(), foodCart2.getDescription(), foodCart2.getMenu(), foodCart2.getHours(), foodCart2.isActive(), foodCart2.getCuisine(),
+        		foodCart2.getStreet1(), foodCart2.getStreet2(), foodCart2.getCity(), foodCart2.getState(), foodCart2.getZip(), foodCart2.getCompanyName(), foodCart2.isLicensed());
+        foodCartDao.delete(foodCart2);
+        System.out.format("Reading FoodCart after deleted: i:%d n:%s d:%s m:%s h:%s a:%b c:%s s:%s t:%s y:%s e:%s z:%d p:%s cp:%s \n",
+        		foodCart2.getRestaurantId(), foodCart2.getName(), foodCart2.getDescription(), foodCart2.getMenu(), foodCart2.getHours(), foodCart2.isActive(), foodCart2.getCuisine(),
+        		foodCart2.getStreet1(), foodCart2.getStreet2(), foodCart2.getCity(), foodCart2.getState(), foodCart2.getZip(), foodCart2.getCompanyName(), foodCart2.isLicensed());
+        
+        
+        // Reviews
+        System.out.format("Reading Review before deleted: i:%s c:%s c:%s r:%s u:%s restid:%s \n",
+                review5.getReviewId(), review5.getCreated(), review5.getContent(), review5.getRating(),
+                review5.getUserName(), review5.getRestaurantId());
+        reviewsDao.delete(review5);
+        System.out.format("Reading Review after deleted: i:%s c:%s c:%s r:%s u:%s restid:%s \n",
+                review5.getReviewId(), review5.getCreated(), review5.getContent(), review5.getRating(),
+                review5.getUserName(), review5.getRestaurantId());
+        
+        
+        // Recommendations
+        System.out.format("Reading Recommendation before deleted : i:%s, u:%s restId:%s",
+                recommendation8.getRecommendationId(), recommendation8.getUserName(), recommendation8.getRestaurantId());
+        recommendationsDao.delete(recommendation8);
+        System.out.format("Reading Recommendation after deleted : i:%s, u:%s restId:%s",
+                recommendation8.getRecommendationId(), recommendation8.getUserName(), recommendation8.getRestaurantId());
+        
+        
+        // Reservations
+        System.out.format("Reading Reservation before deleted: i:%s st:%s e:%s s:%s u:%s restId:%s",
+                reservation9.getReservationId(), reservation9.getStart(), reservation9.getEnd(), reservation9.getSize(),
+                reservation9.getUserName(), reservation9.getRestaurantId());
+        reservationsDao.delete(reservation9);
+        System.out.format("Reading Reservation after deleted: i:%s st:%s e:%s s:%s u:%s restId:%s",
+                reservation9.getReservationId(), reservation9.getStart(), reservation9.getEnd(), reservation9.getSize(),
+                reservation9.getUserName(), reservation9.getRestaurantId());
+             
+	}
+}

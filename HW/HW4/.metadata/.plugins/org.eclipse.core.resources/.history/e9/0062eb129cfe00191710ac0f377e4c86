@@ -1,0 +1,201 @@
+package blog.dal;
+
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Data access object (DAO) class to interact with the underlying TakeOut table in MySQL
+ * instance. 
+ */
+public class TakeOutDao extends RestaurantsDao {
+	// Single pattern: instantiation is limited to one object.
+	private static TakeOutDao instance = null;
+	protected TakeOutDao() {
+		super();
+	}
+	public static TakeOutDao getInstance() {
+		if(instance == null) {
+			instance = new TakeOutDao();
+		}
+		return instance;
+	}
+
+	/**
+	 * Save the TakeOut instance by storing it in your MySQL instance.
+	 * This runs a INSERT statement.
+	 */
+	public TakeOut create(TakeOut takeOut) throws SQLException {
+		
+		create(new Restaurants(takeOut.getRestaurantId(), takeOut.getName(), takeOut.getDescription(), takeOut.getMenu(), 
+				takeOut.getHours(), takeOut.isActive(), takeOut.getCuisine(), takeOut.getStreet1(), takeOut.getStreet2(), 
+				takeOut.getCity(), takeOut.getState(), takeOut.getZip(), takeOut.getCompanyName()));
+
+		String insertTOR = "INSERT INTO TakeOutRestaurant(RestaurantId, MaxWaitTime) VALUES(?,?)";
+		Connection connection = null;
+		PreparedStatement insertStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			insertStmt = connection.prepareStatement(insertTOR);
+	        insertStmt.setInt(1, (takeOut.getRestaurantId()));
+	        insertStmt.setInt(2, (takeOut.getMaxWaitTime()));
+			insertStmt.executeUpdate();
+			
+			return takeOut;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(insertStmt != null) {
+				insertStmt.close();
+			}
+		}
+	}
+
+
+	/**
+	 * Delete the TakeOut instance.
+	 * This runs a DELETE statement.
+	 */
+	public TakeOut delete(TakeOut takeOut) throws SQLException {
+		String deleteTOR = "DELETE FROM TakeOutRestaurant WHERE RestaurantId=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteTOR);
+			deleteStmt.setInt(1, takeOut.getRestaurantId());
+			int affectedRows = deleteStmt.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException("No records available to delete for RestaurantId=" + takeOut.getRestaurantId());
+			}
+			super.delete(takeOut);
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
+
+	/**
+	 * Get the TakeOut record by fetching it from your MySQL instance.
+	 * This runs a SELECT statement and returns a single TakeOut instance.
+	 */
+	public TakeOut getTakeOutById(int restaurantId) throws SQLException {
+		 String selectTor = "SELECT tor.RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1,"
+	                + "Street2, City, State, Zip, CompanyName, MaxWaitTime FROM TakeOutRestaurant AS tor JOIN Restaurants "
+	                + "on tor.RestaurantId=Restaurants.RestaurantId WHERE tor.RestaurantId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectTor);
+            selectStmt.setInt(1, restaurantId);
+            results = selectStmt.executeQuery();
+            if(results.next()) {
+                int restId = results.getInt("RestaurantId");
+                String name = results.getString("Name");
+                String desc = results.getString("Description");
+                String menu = results.getString("Menu");
+                String hours = results.getString("Hours");
+                Boolean active = results.getBoolean("Active");
+                Restaurants.CuisineType cuisine = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+                String street1 = results.getString("Street1");
+                String street2 = results.getString("Street2");
+                String city = results.getString("City");
+                String state = results.getString("State");
+                int zip = results.getInt("Zip");                
+                String companyName = results.getString("CompanyName");
+                int max = results.getInt("MaxWaitTime");
+                TakeOut takeOut = new TakeOut(restId, name, desc, menu, hours, active, cuisine, street1, street2, city, state, zip, companyName, max);
+                return takeOut;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+	
+	public List<TakeOut> getTakeOutByCompanyName(String companyName) throws SQLException {
+		List<TakeOut> takeOut = new ArrayList<TakeOut>();
+		String selectSDR =  "SELECT tor.RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1,"
+        + "Street2, City, State, Zip, CompanyName, Capacity FROM TakeOutRestaurant AS tor JOIN Restaurants on tor.RestaurantId=Restaurants.RestaurantId "
+        + "WHERE Restaurants.CompanyName=?;";
+		
+//		List<TakeOut> takeOut = new ArrayList<TakeOut>();
+//		String selectTOR = "SELECT tor.RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1,"
+//				+ "Street2, City, State, Zip, CompanyName, MaxWaitTime FROM TakeOutRestaurant AS tor JOIN Restaurants on tor.RestaurantId=Restaurants.RestaurantId WHERE Restaurants.CompanyName=?;";
+//		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectTOR);
+			selectStmt.setString(1, companyName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int restaurantId = results.getInt("RestaurantId");
+				String name = results.getString("Name");
+				String description = results.getString("Description");
+				String menu = results.getString("Menu");
+				String hours = results.getString("Hours");
+				Boolean active = results.getBoolean("Active");
+				Restaurants.CuisineType cuisine = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+				String street1 = results.getString("Street1");
+				String street2 = results.getString("Street2");
+				String city = results.getString("City");
+				String state = results.getString("State");
+				int zip = results.getInt("Zip");
+				String companyName17 = results.getString("CompanyName");
+				int maxWaitTime = results.getInt("MaxWaitTime");
+				
+				TakeOut takeOut1 = new TakeOut(restaurantId, name, description, menu, hours, active, cuisine, street1, street2, city, state, zip, companyName17, maxWaitTime);
+				takeOut.add(takeOut1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return takeOut;
+	}
+	
+}

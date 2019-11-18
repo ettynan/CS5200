@@ -1,0 +1,200 @@
+package blog.dal;
+
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class CreditCardsDao {
+    protected ConnectionManager connectionManager;
+
+    private static CreditCardsDao instance = null;
+
+    protected CreditCardsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static CreditCardsDao getInstance() {
+        if (instance == null) {
+            instance = new CreditCardsDao();
+        }
+        return instance;
+    }
+
+    public CreditCards create(CreditCards creditCards) throws SQLException {
+        String insertCreditCard =
+                "INSERT INTO CreditCards(CardNumber,Expiration,UserName) " +
+                        "VALUES(?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertCreditCard);
+            insertStmt.setLong(1, (creditCards.getCardNumber()));
+            insertStmt.setTimestamp(2, new Timestamp (creditCards.getExpiration().getTime()));
+            insertStmt.setString(3, creditCards.getUserName());
+            insertStmt.executeUpdate();
+            return creditCards;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    /**
+	 * Get the CreditCards record by fetching it from your MySQL instance.
+	 * This runs a SELECT statement and returns a single Companies instance.
+	 */
+	public CreditCards getCreditCard(long cardNumber) throws SQLException {
+		String selectCreditCard =
+			"SELECT CardNumber,Expiration,UserName " +
+			"FROM CreditCards " +
+			"WHERE CardNumber=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectCreditCard);
+			selectStmt.setLong(1, cardNumber);
+			results = selectStmt.executeQuery();
+			UsersDao usersDao = UsersDao.getInstance();
+			if(results.next()) {
+				long resultcardNumber = results.getLong("CardNumber");
+				Date expiration = results.getDate("Expiration");
+				String userName = results.getString("UserName");
+				
+				Users user = usersDao.getUserFromUserName(userName);
+				CreditCards creditCard = new CreditCards(cardNumber, expiration, userName);
+				return creditCard ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Read the CreditCards instance.
+	 **/
+	public List<CreditCards> getCreditCardsByUserName(String userName)
+			throws SQLException {
+		List<CreditCards> creditCards = new ArrayList<CreditCards>();
+		String selectCreditCards =
+			"SELECT CardNumber, Expiration, UserName" +
+			"FROM CreditCards" +
+			"WHERE UserName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectCreditCards);
+			selectStmt.setString(1, userName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				long cardNumber = results.getLong("CardNumber");
+				Date expiration = results.getDate("Expiration");
+				CreditCards creditCard = new CreditCards(cardNumber, expiration, userName);
+                creditCards.add(creditCard);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return creditCards;
+	}
+	
+	/**
+	 * Update the expiration of the CreditCards instance.
+	 * This runs a UPDATE statement.
+	 */
+	public CreditCards updateExpiration(CreditCards creditCard, Date newExpiration) throws SQLException {
+		String updateCreditCard = "UPDATE CreditCards SET Expiration=?, WHERE CardNumber=?;";
+		Connection connection = null;
+		PreparedStatement updateStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			updateStmt = connection.prepareStatement(updateCreditCard);
+			updateStmt.setDate(1, (Date) newExpiration);
+
+			// Update the blogPost param before returning to the caller.
+			creditCard.setExpiration(newExpiration);
+			return creditCard;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(updateStmt != null) {
+				updateStmt.close();
+			}
+		}
+	}
+	
+	/**
+     * Delete the CreditCards instance.
+     * This runs a DELETE statement.
+     */
+    public CreditCards delete(CreditCards creditCard) throws SQLException {
+        String deleteCreditCard = "DELETE FROM Users WHERE CreditCard=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteCreditCard);
+            deleteStmt.setLong(1, creditCard.getCardNumber());
+            deleteStmt.executeUpdate();
+
+            // Return null so the caller can no longer operate on the Persons instance.
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+}

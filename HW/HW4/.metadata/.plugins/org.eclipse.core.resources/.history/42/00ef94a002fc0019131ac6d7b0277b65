@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="hw4_ET_Tynan">
+        <property name="context-root" value="hw4_ET_Tynan"/>
+        <property name="java-output-path" value="/hw4_ET_Tynan/build/classes"/>
+    </wb-module>
+</project-modules>

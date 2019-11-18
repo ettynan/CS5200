@@ -1,0 +1,35 @@
+package blog.model;
+
+/**
+ * Class for FoodCart restaurants extending Restaurants
+ */
+public class FoodCartRestaurants extends blog.model.Restaurants {
+    protected Restaurants restaurant;
+    protected boolean Licensed;
+
+    public FoodCartRestaurants(Integer restaurantId, String name, String description, String menu, String hours,
+                               boolean active, CuisineType cuisine, String street1, String street2,
+                               String city, String state, Integer zip, String companyName,
+                               blog.model.Restaurants restaurant, boolean licensed) {
+        super(restaurantId, name, description, menu, hours, active, cuisine, street1, street2, city, state, zip,
+                companyName);
+        this.restaurant = restaurant;
+        this.Licensed = licensed;
+    }
+
+    public Restaurants getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurants restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public boolean isLicensed() {
+        return Licensed;
+    }
+
+    public void setLicensed(boolean licensed) {
+        this.Licensed = licensed;
+    }
+}

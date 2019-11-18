@@ -1,0 +1,6 @@
+package blog.dal;
+
+import blog.model.*;
+
+public class FoodCartRestaurantsDao {
+}

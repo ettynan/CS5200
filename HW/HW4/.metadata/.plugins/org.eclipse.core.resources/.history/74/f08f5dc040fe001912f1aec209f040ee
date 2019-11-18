@@ -1,0 +1,125 @@
+package blog.dal;
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Types;
+import java.util.ArrayList;
+//import java.util.Date;
+import java.util.List;
+import java.sql.ResultSet;
+
+public class ReservationsDao {
+	protected ConnectionManager connectionManager;
+
+    private static ReservationsDao instance = null;
+
+    protected ReservationsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static ReservationsDao getInstance() {
+        if (instance == null) {
+            instance = new ReservationsDao();
+        }
+        return instance;
+    }
+
+    public Reservations create(Reservations reservations) throws SQLException {
+        String insertReservation =
+                "INSERT INTO Reservations(ReservationsId, Start, End, Size, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertReservation);
+            insertStmt.setInt(1, (reservations.getReservationId()));
+            insertStmt.setDate(2, (Date) (reservations.getStart()));
+            insertStmt.setDate(3, (Date) (reservations.getEnd()));
+            insertStmt.setInt(4, reservations.getSize());
+            insertStmt.setString(5, reservations.getUserName());
+            insertStmt.setInt(6, reservations.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int reservationId = -1;
+			if(resultKey.next()) {
+				reservationId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			reservations.setReservationId(reservationId);
+            
+            return reservations;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Reservations getReservationById(int reservationsId) throws SQLException {
+        String selectReservation = "SELECT FROM Reservations WHERE ReservationId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectReservation);
+            selectStmt.setInt(1, reservationsId);
+            results = selectStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Delete the Reservations instance.
+     * This runs a DELETE statement.
+     */
+    public Reservations delete(Reservations reservations) throws SQLException {
+        String deleteReservation = "DELETE FROM Reservations WHERE reservationId=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteReservation);
+            deleteStmt.setInt(1, reservations.getReservationId());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+}

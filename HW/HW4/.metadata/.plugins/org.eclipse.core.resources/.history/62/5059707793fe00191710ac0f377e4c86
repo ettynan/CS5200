@@ -1,0 +1,198 @@
+package blog.dal;
+
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Data access object (DAO) class to interact with the underlying SitDownRestaurants table in your MySQL
+ * instance. 
+ */
+public class SitDownDao extends RestaurantsDao {
+	// Single pattern: instantiation is limited to one object.
+	private static SitDownDao instance = null;
+	protected SitDownDao() {
+		super();
+	}
+	public static SitDownDao getInstance() {
+		if(instance == null) {
+			instance = new SitDownDao();
+		}
+		return instance;
+	}
+
+	/**
+	 * Save the SitDown instance by storing it in your MySQL instance.
+	 * This runs a INSERT statement.
+	 */
+	public SitDown create(SitDown sitDown) throws SQLException {
+		
+		create(new Restaurants(sitDown.getRestaurantId(), sitDown.getName(), sitDown.getDescription(), sitDown.getMenu(), 
+				sitDown.getHours(), sitDown.isActive(), sitDown.getCuisine(), sitDown.getStreet1(), sitDown.getStreet2(), 
+				sitDown.getCity(), sitDown.getState(), sitDown.getZip(), sitDown.getCompanyName()));
+
+		String insertSDR = "INSERT INTO SitDownRestaurant(RestaurantId, Capacity) VALUES(?,?)";
+		Connection connection = null;
+		PreparedStatement insertStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			insertStmt = connection.prepareStatement(insertSDR);
+	        insertStmt.setInt(1, (sitDown.getRestaurantId()));
+	        insertStmt.setInt(2, (sitDown.getCapacity()));
+			insertStmt.executeUpdate();
+			return sitDown;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(insertStmt != null) {
+				insertStmt.close();
+			}
+		}
+	}
+
+
+	/**
+	 * Delete the SDR instance.
+	 * This runs a DELETE statement.
+	 */
+	public SitDown delete(SitDown sitDown) throws SQLException {
+		String deleteSDR = "DELETE FROM SitDownRestaurant WHERE RestaurantId=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteSDR);
+			deleteStmt.setInt(1, sitDown.getRestaurantId());
+			int affectedRows = deleteStmt.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException("No records available to delete for RestaurantId=" + sitDown.getRestaurantId());
+			}
+			super.delete(sitDown);
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
+
+	/**
+	 * Get the SDR record by fetching it from your MySQL instance.
+	 * This runs a SELECT statement and returns a single SDR instance.
+	 */
+	public SitDown getSitDownById(int restaurantId) throws SQLException {
+        String selectSDR = "SELECT sdr.RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1,"
+                + "Street2, City, State, Zip, CompanyName, Capacity FROM SitDownRestaurant AS sdr JOIN Restaurants on sdr.RestaurantId=Restaurants.RestaurantId "
+                + "WHERE sdr.RestaurantId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectSDR);
+            selectStmt.setInt(1, restaurantId);
+            results = selectStmt.executeQuery();
+            if(results.next()) {
+                int restId = results.getInt("RestaurantId");
+                String name = results.getString("Name");
+                String desc = results.getString("Description");
+                String menu = results.getString("Menu");
+                String hours = results.getString("Hours");
+                Boolean active = results.getBoolean("Active");
+                Restaurants.CuisineType ct = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+                String street1 = results.getString("Street1");
+                String street2 = results.getString("Street2");
+                String city = results.getString("City");
+                String state = results.getString("State");
+                int zip = results.getInt("Zip");                
+                String companyName = results.getString("CompanyName");
+                int cap = results.getInt("Capacity");
+                SitDown sitDown = new SitDown(restId, name, desc, menu, hours, active, ct, street1, street2, city, state, zip, companyName, cap);
+                return sitDown;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+
+	public List<SitDown> getSitDownByCompanyName(String companyName) throws SQLException {
+		List<SitDown> sitDown = new ArrayList<SitDown>();
+		String selectSDR = "SELECT RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1,"
+				+ "Street2, City, State, Zip, CompanyName, Capacity FROM SitDownRestaurant AS sdr JOIN Restaurants"
+				+ "on sdr.RestaurantId=Restaurants.RestaurantId WHERE Restaurants.CompanyName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectSDR);
+			selectStmt.setString(1, companyName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int restaurantId = results.getInt("RestaurantId");
+				String name = results.getString("Name");
+				String description = results.getString("Description");
+				String menu = results.getString("Menu");
+				String hours = results.getString("Hours");
+				Boolean active = results.getBoolean("Active");
+				Restaurants.CuisineType cuisine = Restaurants.CuisineType.valueOf(results.getString("Cuisine"));
+				String street1 = results.getString("Street1");
+				String street2 = results.getString("Street2");
+				String city = results.getString("City");
+				String state = results.getString("State");
+				int zip = results.getInt("Zip");
+				String companyName1 = results.getString("CompanyName");
+				int capacity = results.getInt("Capacity");
+				
+				SitDown sitDown1 = new SitDown(restaurantId, name, description, menu, hours, active, 
+						cuisine, street1, street2, city, state, zip, companyName1, capacity);
+				sitDown.add(sitDown1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return sitDown;
+	}
+	
+}

@@ -1,0 +1,179 @@
+package blog.dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import blog.model.*;
+import blog.model.Restaurants.CuisineType;
+
+public class RestaurantsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RestaurantsDao instance = null;
+
+    protected RestaurantsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static RestaurantsDao getInstance() {
+        if (instance == null) {
+            instance = new RestaurantsDao();
+        }
+        return instance;
+    }
+    
+    
+    public Restaurants create(Restaurants restaurants) throws SQLException {
+        String insertRestaurant =
+                "INSERT INTO Restaurants(RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1, Street2, City, State, Zip, CompanyName) " +
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertRestaurant);
+            insertStmt.setInt(1, (restaurants.getRestaurantId()));
+            insertStmt.setString(2, (restaurants.getName()));
+            insertStmt.setString(3, (restaurants.getDescription()));
+            insertStmt.setString(4, (restaurants.getMenu()));
+            insertStmt.setString(5, (restaurants.getHours()));
+            insertStmt.setBoolean(6, (restaurants.isActive()));
+            insertStmt.setString(7, (restaurants.getCuisine().name()));
+            insertStmt.setString(8, (restaurants.getStreet1()));
+            insertStmt.setString(9, (restaurants.getStreet2()));
+            insertStmt.setString(10, (restaurants.getCity()));
+            insertStmt.setString(11, (restaurants.getState()));
+            insertStmt.setInt(12, (restaurants.getZip()));
+            insertStmt.setString(13, (restaurants.getCompanyName()));
+            
+            insertStmt.executeUpdate();
+            return restaurants;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Restaurants getRestaurantById(int restaurantId) throws SQLException {
+            String selectRestaurant = "SELECT FROM Restaurants WHERE RestaurantId=?;";
+            Connection connection = null;
+            PreparedStatement selectStmt = null;
+            ResultSet results = null;
+            try {
+                connection = connectionManager.getConnection();
+                selectStmt = connection.prepareStatement(selectRestaurant);
+                selectStmt.setLong(1, restaurantId);
+                results = selectStmt.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            } finally {
+                if(connection != null) {
+                    connection.close();
+                }
+                if(selectStmt != null) {
+                    selectStmt.close();
+                }
+                if(results != null) {
+                    results.close();
+                }
+            }
+            return null;
+        }
+
+    /**
+	 * Read the Restaurants instance.
+	 **/
+	public List<Restaurants> getRestaurantsbyCompanyName(String companyName)
+			throws SQLException {
+		List<Restaurants> restaurants = new ArrayList<Restaurants>();
+		String selectRestaurants =
+			"SELECT RestaurantId, Name, Description, Menu, Hours, Active, Cuisine, Street1, Street2, City, State, Zip, CompanyName" +
+			"FROM Restaurants" +
+			"WHERE CompanyName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectRestaurants);
+			selectStmt.setString(1, companyName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				Integer restaurantId = results.getString("RestaurantId");
+			    String name;
+			    String description;
+			    String menu;
+			    String hours;
+			    boolean active;
+			    CuisineType cuisine;
+			    String street1;
+			    String street2;
+			    String city;
+			    String state;
+			    Integer zip;
+			    String companyName;
+			    long cardNumber = results.getLong("CardNumber");
+				Date expiration = results.getDate("Expiration");
+				CreditCards creditCard = new CreditCards(cardNumber, expiration, userName);
+                creditCards.add(creditCard);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return restaurants;
+	}
+    
+    /**
+     * Delete the Restaurants instance.
+     * This runs a DELETE statement.
+     */
+    public Restaurants delete(Restaurants restaurant) throws SQLException {
+        String deleteRestaurant = "DELETE FROM Restaurants WHERE name=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteRestaurant);
+            deleteStmt.setString(1, restaurant.getName());
+            deleteStmt.executeUpdate();
+            // Return null so the caller can no longer operate on the Persons instance.
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+	
+}

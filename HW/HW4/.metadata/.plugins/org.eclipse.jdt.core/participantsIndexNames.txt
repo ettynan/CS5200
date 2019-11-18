@@ -1,0 +1,5 @@
+INDEX VERSION 1.131
+/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2757045265.index
+/HW4Erin_Tynan/src
+/Users/user/Desktop/HW4/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1208791639.index
+/Demo/src

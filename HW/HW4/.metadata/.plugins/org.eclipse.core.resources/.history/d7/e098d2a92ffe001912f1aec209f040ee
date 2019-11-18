@@ -1,0 +1,26 @@
+package blog.model;
+
+/**
+ * Class for SitDown restaurants extending Restaurants
+ */
+public class SDR extends Restaurants {
+    protected Integer Capacity;
+
+    public SDR(Integer restaurantId, String name, String description, String menu, String hours,
+                              boolean active, CuisineType cuisine, String street1, String street2,
+                              String city, String state, Integer zip, String companyName,
+                              Restaurants restaurant, Integer capacity) {
+        super(restaurantId, name, description, menu, hours, active, cuisine, street1, street2, city, state, zip,
+                companyName);
+        this.Capacity = capacity;
+    }
+
+    public Integer getCapacity() {
+        return Capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.Capacity = capacity;
+    }
+}
+

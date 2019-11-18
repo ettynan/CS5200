@@ -1,0 +1,20 @@
+package blog.dal;
+
+import blog.model.*;
+
+public class RestaurantsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RestaurantsDao instance = null;
+
+    protected RestaurantsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static CreditCardsDao getInstance() {
+        if (instance == null) {
+            instance = new RestaurantsDao();
+        }
+        return instance;
+    }
+}

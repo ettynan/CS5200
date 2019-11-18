@@ -1,0 +1,206 @@
+package blog.dal;
+import blog.model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+
+public class RecommendationsDao {
+	protected ConnectionManager connectionManager;
+
+    private static RecommendationsDao instance = null;
+
+    protected RecommendationsDao() {
+        connectionManager = new ConnectionManager();
+    }
+
+    public static RecommendationsDao getInstance() {
+        if (instance == null) {
+            instance = new RecommendationsDao();
+        }
+        return instance;
+    }
+
+    
+    public Recommendations create(Recommendations recommendations) throws SQLException {
+        String insertRecommendation =
+                "INSERT INTO Recommendations(RecommendationId, UserName, RestaurantId) " +
+                        "VALUES(?,?,?,?,?);";
+        Connection connection = null;
+        PreparedStatement insertStmt = null;
+		ResultSet resultKey = null;
+        try {
+            connection = connectionManager.getConnection();
+            insertStmt = connection.prepareStatement(insertRecommendation, Statement.RETURN_GENERATED_KEYS);
+            insertStmt.setInt(1, (recommendations.getRecommendationId()));
+            insertStmt.setString(2, recommendations.getUserName());
+            insertStmt.setInt(3, recommendations.getRestaurantId());
+            insertStmt.executeUpdate();
+            
+            resultKey = insertStmt.getGeneratedKeys();
+			int recommendationId = -1;
+			if(resultKey.next()) {
+				recommendationId = resultKey.getInt(1);
+			} else {
+				throw new SQLException("Unable to retrieve auto-generated key.");
+			}
+			recommendations.setRecommendationId(recommendationId);
+            
+            return recommendations;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(insertStmt != null) {
+                insertStmt.close();
+            }
+        }
+    }
+    
+    public Recommendations getRecommendationsById(int recommendationsId) throws SQLException {
+        String selectRecommendation = "SELECT FROM Recommendations WHERE RecommendationsId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectRecommendation);
+            selectStmt.setInt(1, recommendationsId);
+            results = selectStmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(selectStmt != null) {
+                selectStmt.close();
+            }
+            if(results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+    
+    public List<Recommendations> getRecommendationsByUserName(String userName)
+			throws SQLException {
+		List<Recommendations> recommendations = new ArrayList<Recommendations>();
+		String selectRecommendations =
+			"SELECT * " +
+			"FROM Recommendations" +
+			"WHERE UserName=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectRecommendations);
+			selectStmt.setString(1, userName);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int recommendationId = results.getInt("RecommendationId");
+			    String userName1 = results.getString("UserName");
+			    int restaurantId = results.getInt("RestaurantId");
+			    
+			    Recommendations recommendation = new Recommendations(recommendationId, userName, restaurantId);
+                recommendations.add(recommendation);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return recommendations;
+	}
+    
+
+    public List<Recommendations> getRecommendationsByRestaurantId(int restaurantId)
+			throws SQLException {
+		List<Recommendations> recommendations = new ArrayList<Recommendations>();
+		String selectRecommendations =
+			"SELECT * " +
+			"FROM Recommendations" +
+			"WHERE RestaurantId=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectRecommendations);
+			selectStmt.setInt(1, restaurantId);
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int recommendationId = results.getInt("RecommendationId");
+			    String userName = results.getString("UserName");
+			    int restaurantId1 = results.getInt("RestaurantId");
+			    
+			    Recommendations recommendation = new Recommendations(recommendationId, userName, restaurantId);
+                recommendations.add(recommendation);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return recommendations;
+	}
+    
+    /**
+     * Delete the Recommendations instance.
+     * This runs a DELETE statement.
+     */
+    public Recommendations delete(Recommendations recommendations) throws SQLException {
+        String deleteRecommendation = "DELETE FROM Recommendations WHERE RecommendationId=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteRecommendation);
+            deleteStmt.setInt(1, recommendations.getRecommendationId());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+}
+

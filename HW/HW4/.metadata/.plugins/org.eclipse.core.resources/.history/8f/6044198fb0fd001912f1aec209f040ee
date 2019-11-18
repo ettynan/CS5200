@@ -1,0 +1,9 @@
+package blog.model;
+
+public enum CuisineType {
+    AFRICAN,
+    AMERICAN,
+    ASIAN,
+    EUROPEAN,
+    HISPANIC
+}

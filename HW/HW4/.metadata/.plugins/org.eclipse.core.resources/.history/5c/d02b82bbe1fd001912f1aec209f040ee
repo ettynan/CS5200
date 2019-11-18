@@ -1,0 +1,24 @@
+package blog.model;
+
+/**
+ * Class for TakeOut restaurants extending Restaurants
+ */
+public class TOR extends Restaurants {
+    protected Integer maxWaitTime;
+
+    public TOR(Integer restaurantId, String name, String description, String menu, String hours,
+                              boolean active, CuisineType cuisineType, String street1, String street2,
+                              String city, String state, Integer zip, String companyName, Integer maxWaitTime) {
+        super(restaurantId, name, description, menu, hours, active, cuisineType, street1, street2, city, state, zip,
+                companyName);
+        this.maxWaitTime = maxWaitTime;
+    }
+
+    public Integer getMaxWaitTime() {
+        return maxWaitTime;
+    }
+
+    public void setMaxWaitTime(Integer maxWaitTime) {
+        this.maxWaitTime = maxWaitTime;
+    }
+}
