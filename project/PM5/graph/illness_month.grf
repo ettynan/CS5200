@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="user" created="Thu Nov 14 22:13:42 EST 2019" guiVersion="5.4.0.8" id="1573908480556" licenseCode="CLP1DNORTH12982057EX" name="illness_weather" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata4">
+<Record fieldDelimiter="|" name="aggbymonth" previewAttachmentCharset="UTF-8" recordDelimiter="\n" type="delimited">
+<Field name="Month" type="string"/>
+<Field name="Illnesses" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata2">
+<Record fieldDelimiter="|" name="aggregatebyyear" previewAttachmentCharset="UTF-8" recordDelimiter="\n" type="delimited">
+<Field name="AvgTemp" type="decimal"/>
+<Field format="yyyy" name="Year" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata1">
+<Record fieldDelimiter="|" name="aggregationbyyear" previewAttachmentCharset="UTF-8" recordDelimiter="\n" type="delimited">
+<Field name="AvgTemp" type="decimal"/>
+<Field name="Year" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata3">
+<Record fieldDelimiter="," name="Illnesses" previewAttachment="${DATAIN_DIR}/DW_outbreak_all.csv" previewAttachmentCharset="UTF-8" quoteChar="both" quotedStrings="true" recordDelimiter="\n" skipSourceRows="1" type="delimited">
+<Field name="Id" type="integer"/>
+<Field name="Year" type="integer"/>
+<Field name="Month" type="string"/>
+<Field name="State" type="string"/>
+<Field eofAsDelimiter="true" name="Illnesses" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata7">
+<Record fieldDelimiter="," name="JoinedOut" previewAttachmentCharset="UTF-8" recordDelimiter="\r\n" type="delimited">
+<Field name="Month" type="string"/>
+<Field name="TempHighInF" type="integer"/>
+<Field name="TempAvgInF" type="integer"/>
+<Field name="TempLowInF" type="integer"/>
+<Field name="HumidityHighPerc" type="integer"/>
+<Field name="HumidityAvgPerc" type="integer"/>
+<Field name="HumidityLowPerc" type="integer"/>
+<Field name="WindHighInMph" type="integer"/>
+<Field name="WindAvgInMph" type="integer"/>
+<Field name="WindGustInMph" type="integer"/>
+<Field name="SnowFallInInches" type="decimal"/>
+<Field name="PrecipitationInInches" type="decimal"/>
+<Field name="Illnesses" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0">
+<Record fieldDelimiter=";" name="Weather" recordDelimiter="\n" type="delimited">
+<Field format="yyyy" name="Year" size="5" type="integer"/>
+<Field length="14" name="AvgTemp" scale="4" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata5">
+<Record fieldDelimiter="," name="WeatherMonth" previewAttachment="${DATAIN_DIR}/WDfix.csv" previewAttachmentCharset="UTF-8" recordDelimiter="\r\n" type="delimited">
+<Field name="WeatherKey" type="integer"/>
+<Field name="WeatherDate" type="date"/>
+<Field name="TempHighInF" type="integer"/>
+<Field name="TempAvgInF" type="integer"/>
+<Field name="TempLowInF" type="integer"/>
+<Field name="HumidityHighPerc" type="integer"/>
+<Field name="HumidityAvgPerc" type="integer"/>
+<Field name="HumidityLowPerc" type="integer"/>
+<Field name="WindHighInMph" type="integer"/>
+<Field name="WindAvgInMph" type="integer"/>
+<Field name="WindGustInMph" type="integer"/>
+<Field name="SnowFallInInches" type="decimal"/>
+<Field name="PrecipitationInInches" type="decimal"/>
+<Field name="Month" type="string"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata6">
+<Record fieldDelimiter="," name="WeatherMonthOut" previewAttachmentCharset="UTF-8" recordDelimiter="\r\n" type="delimited">
+<Field name="TempHighInF" type="integer"/>
+<Field name="TempAvgInF" type="integer"/>
+<Field name="TempLowInF" type="integer"/>
+<Field name="HumidityHighPerc" type="integer"/>
+<Field name="HumidityAvgPerc" type="integer"/>
+<Field name="HumidityLowPerc" type="integer"/>
+<Field name="WindHighInMph" type="integer"/>
+<Field name="WindAvgInMph" type="integer"/>
+<Field name="WindGustInMph" type="integer"/>
+<Field name="SnowFallInInches" type="decimal"/>
+<Field name="PrecipitationInInches" type="decimal"/>
+<Field name="Month" type="string"/>
+</Record>
+</Metadata>
+<Connection database="MYSQL" dbURL="jdbc:mysql://localhost:3306/FoodBusterApplication" id="JDBC0" jdbcSpecific="MYSQL" name="FoodBusterApp" password="useruser" type="JDBC" user="root"/>
+<Connection database="MYSQL" dbURL="jdbc:mysql://localhost:3306/FoodBusterApplication?useSSL=false" id="JDBC1" jdbcSpecific="MYSQL" name="FoodBusterApplication" password="useruser" type="JDBC" user="root"/>
+<GraphParameters>
+<GraphParameterFile fileURL="workspace.prm"/>
+</GraphParameters>
+<Dictionary/>
+</Global>
+<Phase number="0">
+<Node aggregateKey="Month" guiName="Aggregate" guiX="475" guiY="293" id="AGGREGATE" mapping="$Month:=$Month;$Illnesses:=sum($Illnesses);" type="AGGREGATE"/>
+<Node aggregateKey="Month" guiName="Aggregate" guiX="475" guiY="443" id="AGGREGATE1" mapping="$TempHighInF:=avg($TempHighInF);$TempAvgInF:=avg($TempAvgInF);$TempLowInF:=avg($TempLowInF);$HumidityHighPerc:=avg($HumidityHighPerc);$HumidityAvgPerc:=avg($HumidityAvgPerc);$HumidityLowPerc:=avg($HumidityLowPerc);$WindHighInMph:=avg($WindHighInMph);$WindAvgInMph:=avg($WindAvgInMph);$WindGustInMph:=avg($WindGustInMph);$SnowFallInInches:=avg($SnowFallInInches);$PrecipitationInInches:=avg($PrecipitationInInches);$Month:=$Month;" type="AGGREGATE"/>
+<Node guiName="Filter" guiX="303" guiY="293" id="FILTER" type="EXT_FILTER">
+<attr name="filterExpression"><![CDATA[//#CTL2
+$in.0.State=="Massachusetts" AND $in.0.Year>=2008;]]></attr>
+</Node>
+<Node guiName="Filter" guiX="303" guiY="443" id="FILTER1" type="EXT_FILTER">
+<attr name="filterExpression"><![CDATA[//#CTL2
+getYear($in.0.WeatherDate)<=2015;]]></attr>
+</Node>
+<Node existingSheetsActions="DO_NOTHING" fileURL="${DATAOUT_DIR}/illPerMonth.xlsx" guiName="SpreadsheetDataWriter" guiX="640" guiY="252" id="SPREADSHEET_DATA_WRITER" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY"/>
+<Node existingSheetsActions="DO_NOTHING" fileURL="${DATAOUT_DIR}/WeatherMonth.xlsx" guiName="SpreadsheetDataWriter" guiX="640" guiY="516" id="SPREADSHEET_DATA_WRITER1" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY"/>
+<Node dataPolicy="lenient" fileURL="${DATAIN_DIR}/DW_outbreak_month.csv" guiName="UniversalDataReader" guiX="71" guiY="293" id="UNIVERSAL_DATA_READER" quoteCharacter="&quot;" quotedStrings="true" skipFirstLine="true" trim="true" type="DATA_READER"/>
+<Node dataPolicy="lenient" fileURL="${DATAIN_DIR}/WDfix.csv" guiName="UniversalDataReader" guiX="80" guiY="443" id="UNIVERSAL_DATA_READER1" quoteCharacter="&quot;" quotedStrings="true" skipFirstLine="true" trim="true" type="DATA_READER"/>
+<Edge fromNode="AGGREGATE:0" guiBendpoints="" guiRouter="Manhattan" id="Edge6" inPort="Port 0 (input)" metadata="Metadata4" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER:0"/>
+<Edge fromNode="AGGREGATE:1" guiBendpoints="" guiRouter="Manhattan" id="Edge16" inPort="Port 0 (driver)" metadata="Metadata4" outPort="Port 1 (out)" toNode="EXT_HASH_JOIN:0"/>
+<Edge fromNode="AGGREGATE1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge9" inPort="Port 0 (input)" metadata="Metadata6" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER1:0"/>
+<Edge fromNode="AGGREGATE1:1" guiBendpoints="" guiRouter="Manhattan" id="Edge17" inPort="Port 1 (slave)" metadata="Metadata6" outPort="Port 1 (out)" toNode="EXT_HASH_JOIN:1"/>
+<Edge fromNode="FILTER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge3" inPort="Port 0 (in)" outPort="Port 0 (accepted)" toNode="AGGREGATE:0"/>
+<Edge fromNode="FILTER1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge21" inPort="Port 0 (in)" outPort="Port 0 (accepted)" toNode="AGGREGATE1:0"/>
+<Edge fromNode="UNIVERSAL_DATA_READER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge4" inPort="Port 0 (in)" metadata="Metadata3" outPort="Port 0 (output)" toNode="FILTER:0"/>
+<Edge fromNode="UNIVERSAL_DATA_READER1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge20" inPort="Port 0 (in)" metadata="Metadata5" outPort="Port 0 (output)" toNode="FILTER1:0"/>
+</Phase>
+<Phase number="1">
+<Node guiName="ExtHashJoin" guiX="658" guiY="397" id="EXT_HASH_JOIN" joinKey="$Month=$Month" type="EXT_HASH_JOIN">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+	$out.0.Month = $in.0.Month;
+	$out.0.Illnesses = $in.0.Illnesses;
+	$out.0.TempHighInF = $in.1.TempHighInF;
+	$out.0.TempAvgInF = $in.1.TempAvgInF;
+	$out.0.TempLowInF = $in.1.TempLowInF;
+	$out.0.HumidityHighPerc = $in.1.HumidityHighPerc;
+	$out.0.HumidityAvgPerc = $in.1.HumidityAvgPerc;
+	$out.0.HumidityLowPerc = $in.1.HumidityLowPerc;
+	$out.0.WindHighInMph = $in.1.WindHighInMph;
+	$out.0.WindAvgInMph = $in.1.WindAvgInMph;
+	$out.0.WindGustInMph = $in.1.WindGustInMph;
+	$out.0.SnowFallInInches = $in.1.SnowFallInInches;
+	$out.0.PrecipitationInInches = $in.1.PrecipitationInInches;
+
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node existingSheetsActions="DO_NOTHING" fileURL="${DATAOUT_DIR}/JoinedMonth.xlsx" guiName="SpreadsheetDataWriter" guiX="887" guiY="403" id="SPREADSHEET_DATA_WRITER2" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY"/>
+<Edge fromNode="EXT_HASH_JOIN:0" guiBendpoints="" guiRouter="Manhattan" id="Edge19" inPort="Port 0 (input)" metadata="Metadata7" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER2:0"/>
+</Phase>
+</Graph>

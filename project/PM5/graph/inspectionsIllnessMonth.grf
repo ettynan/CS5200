@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="clara" created="Sat Nov 16 10:47:42 PST 2019" guiVersion="5.4.0.8" id="1573975560663" licenseCode="CLP1DNORTH51849815EX" name="inspectionsIllnessMonth" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata6">
+<Record fieldDelimiter="," name="DW_outbreak_all" previewAttachment="${DATAIN_DIR}/DW_outbreak_all.csv" previewAttachmentCharset="UTF-8" quoteChar="both" quotedStrings="true" recordDelimiter="\n" skipSourceRows="1" type="delimited">
+<Field name="Id" type="integer"/>
+<Field name="Year" type="integer"/>
+<Field name="Month" type="string"/>
+<Field name="State" type="string"/>
+<Field eofAsDelimiter="true" name="Illnesses" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0">
+<Record fieldDelimiter=";" name="DWOutbreaksMonthYear" previewAttachmentCharset="UTF-8" recordDelimiter="\n" type="delimited">
+<Field name="OutbreakYear" size="11" type="integer"/>
+<Field name="OutbreakMonth" size="45" type="string"/>
+<Field name="IllnessesCount" size="21" type="long"/>
+<Field name="Location" size="45" type="string"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata7">
+<Record fieldDelimiter=";" name="InspectionHistory" recordDelimiter="\n" type="delimited">
+<Field name="InspectionYear" size="5" type="integer"/>
+<Field name="InspectionMonth" size="9" type="string"/>
+<Field name="InspectionCount" size="21" type="long"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata1">
+<Record fieldDelimiter="|" name="JoinIllnessInspections" previewAttachmentCharset="UTF-8" recordDelimiter="\n" type="delimited">
+<Field name="Year" type="integer"/>
+<Field name="Month" type="string"/>
+<Field name="Illnesses" type="long"/>
+<Field name="Inspections" type="long"/>
+</Record>
+</Metadata>
+<Connection database="MYSQL" dbURL="jdbc:mysql://localhost:3306/Inspections" id="JDBC0" jdbcSpecific="MYSQL" name="NewConnection" password="password" type="JDBC" user="root"/>
+<GraphParameters>
+<GraphParameterFile fileURL="workspace.prm"/>
+</GraphParameters>
+<Dictionary/>
+</Global>
+<Phase number="0">
+<Node dbConnection="JDBC0" guiName="DatabaseWriter" guiX="301" guiY="42" id="DATABASE_WRITER" type="DB_OUTPUT_TABLE">
+<attr name="sqlQuery"><![CDATA[INSERT INTO `Inspections`.`DWOutbreaksMonth` (`OutbreakYear`, `OutbreakMonth`, `Location`, `Illnesses`)
+VALUES ($Year, $Month, $State, $Illnesses)]]></attr>
+</Node>
+<Node dataPolicy="lenient" fileURL="${DATAIN_DIR}/DW_outbreak_all.csv" guiName="FlatFileReader" guiX="48" guiY="42" id="FLAT_FILE_READER" quoteCharacter="&quot;" quotedStrings="true" trim="true" type="FLAT_FILE_READER"/>
+<Edge fromNode="FLAT_FILE_READER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge16" inPort="Port 0 (in)" metadata="Metadata6" outPort="Port 0 (output)" toNode="DATABASE_WRITER:0"/>
+</Phase>
+<Phase number="1">
+<Node dbConnection="JDBC0" guiName="DatabaseReader" guiX="42" guiY="181" id="DATABASE_READER" type="DB_INPUT_TABLE">
+<attr name="sqlQuery"><![CDATA[SELECT OutbreakYear, OutbreakMonth, SUM(Illnesses) AS IllnessesSum,  Location
+FROM DWOutbreaksMonth
+WHERE Location = "Massachusetts"
+	AND OutbreakYear > 2007 
+    AND OutbreakYear < 2019
+GROUP BY OutbreakYear, OutbreakMonth
+ORDER BY OutbreakYear;]]></attr>
+</Node>
+<Node dbConnection="JDBC0" guiName="DatabaseReader" guiX="42" guiY="291" id="DATABASE_READER1" type="DB_INPUT_TABLE">
+<attr name="sqlQuery"><![CDATA[SELECT YEAR(InspectionDate), MONTHNAME(InspectionDate), COUNT(InspectionResult)
+FROM Inspections.InspectionHistory
+GROUP BY YEAR(InspectionDate), MONTHNAME(InspectionDate)
+ORDER BY YEAR(InspectionDate), MONTHNAME(InspectionDate)]]></attr>
+</Node>
+<Node guiName="ExtMergeJoin" guiX="314" guiY="216" id="EXT_MERGE_JOIN" joinKey="$OutbreakYear(a);$OutbreakMonth(a)#$InspectionYear(a);$InspectionMonth(a);" type="EXT_MERGE_JOIN">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+	$out.0.Year = $in.0.OutbreakYear;
+	$out.0.Month = $in.0.OutbreakMonth;
+	$out.0.Illnesses = $in.0.IllnessesCount;
+	$out.0.Inspections = $in.1.InspectionCount;
+
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node existingSheetsActions="DO_NOTHING" fileURL="${DATAOUT_DIR}/joinIllnessInspections.xlsx" guiName="SpreadsheetDataWriter" guiX="520" guiY="216" id="SPREADSHEET_DATA_WRITER" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mapping>
+    <globalAttributes>
+        <orientation>VERTICAL</orientation>
+        <step>1</step>
+        <writeHeader>true</writeHeader>
+    </globalAttributes>
+    <defaultSkip>1</defaultSkip>
+    <headerGroups>
+        <headerGroup skip="1">
+            <cloverField>Year</cloverField>
+            <headerRanges>
+                <headerRange begin="A1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>Month</cloverField>
+            <headerRanges>
+                <headerRange begin="B1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>Illnesses</cloverField>
+            <headerRanges>
+                <headerRange begin="C1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>Inspections</cloverField>
+            <headerRanges>
+                <headerRange begin="D1"/>
+            </headerRanges>
+        </headerGroup>
+    </headerGroups>
+</mapping>
+]]></attr>
+</Node>
+<Edge fromNode="DATABASE_READER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge19" inPort="Port 0 (driver)" metadata="Metadata0" outPort="Port 0 (out)" toNode="EXT_MERGE_JOIN:0"/>
+<Edge fromNode="DATABASE_READER1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge20" inPort="Port 1 (slave)" metadata="Metadata7" outPort="Port 0 (out)" toNode="EXT_MERGE_JOIN:1"/>
+<Edge fromNode="EXT_MERGE_JOIN:0" guiBendpoints="" guiRouter="Manhattan" id="Edge22" inPort="Port 0 (input)" metadata="Metadata1" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER:0"/>
+</Phase>
+</Graph>
